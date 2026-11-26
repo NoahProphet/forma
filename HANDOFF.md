@@ -8,7 +8,7 @@ Work on branch `feature/home-03-showroom-refinements`. Continue on GPT‑6.2 Ast
 - [x] Validate HOME-03 in Chromium at five widths. The 390 px cold test on a 4 Mbps link with 150 ms latency and 4× CPU slowdown measured 597 ms to ready and 76,694 bytes. Eight cached swaps measured 30 ms median and 31 ms maximum.
 - [x] Polish. Fixed short-page footers, active mobile navigation, optional form labels, keyboard links to invalid fields and ambiguous Persian FAQ wording. Checked 18 pages at five widths, 70 internal links/images, form recovery and Django tests.
 - [x] Animate. Added a 180 ms material-image transition after finish or gallery selection and 160 ms feedback on the updated header quantity. Verified keyboard activation, no-motion alternatives, stock rejection, drawer focus, sharing, Back and no-JavaScript shopping.
-- [ ] Run Impeccable layout, validate and checkpoint.
+- [x] Layout. Replaced mobile journal tiles with image/title rows, simplified the brand directory and widened the checkout form on tablets and desktop. Verified populated checkout, brand destinations, all 18 pages and five widths. The layout detector returned zero findings.
 - [ ] Run Impeccable delight, validate and checkpoint.
 - [ ] Run the site-wide audit, archive screenshot comparisons, push and open the pull request.
 
