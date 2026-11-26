@@ -40,7 +40,11 @@
           {% include "partials/stock.html" with stock=variant.stock %}
         </div>
         <div class="purchase-meta">
-          {% if variant %}<span class="model-label">شناسه کالا <bdi>{{ variant.sku }}</bdi></span>{% endif %}
+          {% if variant %}<div class="sku-reference">
+            <span class="model-label">شناسه کالا <bdi dir="ltr" data-sku>{{ variant.sku }}</bdi></span>
+            <button class="copy-sku" type="button" aria-label="کپی شناسه کالا {{ variant.sku }}" title="کپی شناسه کالا">{% include "partials/icon.html" with name="copy" %}</button>
+            <span class="sku-feedback" role="status"></span>
+          </div>{% endif %}
           {% if product.is_demo %}<span class="note">محصول نمونه فروشگاه</span>{% endif %}
         </div>
       </div>

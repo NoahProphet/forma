@@ -9,7 +9,7 @@ Work on branch `feature/home-03-showroom-refinements`. Continue on GPT‑6.2 Ast
 - [x] Polish. Fixed short-page footers, active mobile navigation, optional form labels, keyboard links to invalid fields and ambiguous Persian FAQ wording. Checked 18 pages at five widths, 70 internal links/images, form recovery and Django tests.
 - [x] Animate. Added a 180 ms material-image transition after finish or gallery selection and 160 ms feedback on the updated header quantity. Verified keyboard activation, no-motion alternatives, stock rejection, drawer focus, sharing, Back and no-JavaScript shopping.
 - [x] Layout. Replaced mobile journal tiles with image/title rows, simplified the brand directory and widened the checkout form on tablets and desktop. Verified populated checkout, brand destinations, all 18 pages and five widths. The layout detector returned zero findings.
-- [ ] Run Impeccable delight, validate and checkpoint.
+- [x] Delight. Added a copy action beside the selected finish SKU. Confirmed the actual clipboard value for two finishes, keyboard activation, denied-permission selection fallback, 320 px and no-JavaScript rendering.
 - [ ] Run the site-wide audit, archive screenshot comparisons, push and open the pull request.
 
 The generated web assets and editable scene are in the repository. The renderer and its temporary PNG outputs can be regenerated independently of Django. The remote was empty on inspection. The local `main` is an empty base commit. No customer database, sessions, environment files or virtual environments belong in the pull request.

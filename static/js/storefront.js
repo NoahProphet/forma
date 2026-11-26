@@ -1,6 +1,28 @@
 const mobileCatalog = window.matchMedia("(max-width: 1023px)");
 const focusBeforeSwap = new WeakMap();
 
+if (navigator.clipboard?.writeText) {
+  document.documentElement.classList.add("clipboard-ready");
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest(".copy-sku");
+    if (!button) return;
+    const reference = button.closest(".sku-reference");
+    const sku = reference.querySelector("[data-sku]");
+    const feedback = reference.querySelector(".sku-feedback");
+    try {
+      await navigator.clipboard.writeText(sku.textContent);
+      feedback.textContent = "شناسه کپی شد.";
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(sku);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      feedback.textContent = "شناسه انتخاب شد. از فرمان «کپی» دستگاه استفاده کنید.";
+    }
+  });
+}
+
 function prepareFilters(restore) {
   const panel = document.getElementById("catalog-panel");
   if (!panel || panel.dataset.filtersReady || typeof HTMLDialogElement === "undefined") return;

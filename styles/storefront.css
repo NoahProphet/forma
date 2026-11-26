@@ -479,6 +479,14 @@ textarea { min-block-size: 7rem; resize: vertical; }
 .purchase-caption a { display: flex; min-block-size: 44px; align-items: center; text-decoration: underline; text-underline-offset: .25em; }
 .purchase-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem .55rem; margin-block-start: .35rem; }
 .model-label { color: var(--muted); font-size: var(--text-meta); overflow-wrap: anywhere; }
+.sku-reference { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem; }
+.sku-reference bdi { color: var(--ink); user-select: all; }
+.copy-sku { display: none; }
+.clipboard-ready .copy-sku { display: inline-grid; place-items: center; min-inline-size: 44px; min-block-size: 44px; color: var(--focus); }
+.copy-sku:is(:hover, :focus-visible) { background-color: var(--stone); }
+.copy-sku .icon { inline-size: 1rem; block-size: 1rem; }
+.sku-feedback { color: var(--muted); font-size: var(--text-small); }
+.purchase-meta { align-items: center; }
 .finish-field { border-block: 1px solid var(--line); margin-block: .7rem .85rem; padding-block: .85rem; }
 .finish-field h2 { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; font-size: var(--text-ui); }
 .finish-field h2 span { font-weight: 530; color: var(--muted); }
