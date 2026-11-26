@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><span aria-current="page">درباره فرما</span></nav>
+  <div class="page-heading"><h1>درباره فرما</h1></div>
+  <div class="editorial-split">
+    <div class="prose">
+      <h2>فرما، شوروم تجهیزات خانه در رشت</h2>
+      <p>نام فرما از «فرم» می‌آید، مفهومی که در معماری با تناسب و هویت فضا پیوند دارد.</p>
+      <p>در شوروم فرما، محصولات آشپزخانه، حمام و ساختمان را می‌توانید کنار هم ببینید. اگر در حال بازسازی هستید، ابعاد محل نصب و نمونه متریال را همراه بیاورید تا انتخاب پرداخت و اندازه ساده‌تر شود.</p>
+      <a class="button" href="{% url 'contact' %}?kind=visit#request">درخواست بازدید از شوروم {% include "partials/icon.html" with name="arrow" %}</a>
+    </div>
+    <img src="{% static 'media/hero.jpg' %}" alt="جزیره سنگی کنار کابینت گردویی" width="1902" height="827">
+  </div>
+</div>
+{% endblock %}

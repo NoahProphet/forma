@@ -1,0 +1,37 @@
+{% load forma %}
+<form id="filters-form" class="filters-form" method="get" action="{% url 'shop' %}" hx-get="{% url 'shop' %}" hx-target="#catalog-panel" hx-swap="outerHTML" hx-trigger="submit, change from:#catalog-sort" hx-indicator="#catalog-loading, #filters-loading" hx-sync="#catalog-panel:replace">
+  <div class="filter-heading">
+    <h2>فیلترها</h2>
+    {% if clear_filters_url %}<a id="clear-facets" class="text-link" href="{{ clear_filters_url }}" hx-get="{{ clear_filters_url }}" hx-target="#catalog-panel" hx-swap="outerHTML" hx-indicator="#catalog-loading, #filters-loading" hx-sync="#catalog-panel:replace">پاک کردن فیلترها</a>{% endif %}
+  </div>
+  <input type="hidden" name="category" value="{{ filters.category }}">
+  <div class="shop-facet">
+    <label class="shop-facet-title" for="filter-q">جست‌وجو در فروشگاه</label>
+    <input id="filter-q" type="search" name="q" value="{{ filters.q }}" maxlength="120" placeholder="نام، مدل یا برند">
+  </div>
+  {% include "partials/shop/scopes.html" with location="sidebar" %}
+  {% include "partials/shop/price-range.html" %}
+  {% if brand_facets %}
+  <fieldset class="shop-facet">
+    <legend class="shop-facet-title">برند</legend>
+    <div class="shop-brand-list">
+      {% for option in brand_facets %}
+      <label class="shop-facet-option" for="brand-{{ option.brand.slug }}">
+        <input id="brand-{{ option.brand.slug }}" type="checkbox" name="brand" value="{{ option.brand.slug }}" data-shop-auto{% if option.brand.slug in filters.brand %} checked{% endif %}>
+        <bdi>{{ option.brand.name }}</bdi><span class="shop-facet-count">{{ option.count|fa }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  {% endif %}
+  <div class="shop-facet">
+    <label class="shop-facet-title" for="filter-finish">رنگ و پرداخت</label>
+    <select id="filter-finish" name="finish" data-shop-auto>
+      <option value="">همه پرداخت‌ها</option>
+      {% for option in finish_options %}<option value="{{ option.slug }}"{% if filters.finish == option.slug %} selected{% endif %}>{{ option.name }}</option>{% endfor %}
+    </select>
+  </div>
+  <label class="shop-facet shop-facet-option" for="filter-stock"><input id="filter-stock" type="checkbox" name="stock" value="yes" data-shop-auto{% if filters.stock == 'yes' %} checked{% endif %}> فقط کالاهای موجود</label>
+  <button id="apply-filters" class="button" type="submit">اعمال فیلترها</button>
+  <p id="filters-loading" class="htmx-indicator loading-label" role="status">در حال جست‌وجو…</p>
+</form>

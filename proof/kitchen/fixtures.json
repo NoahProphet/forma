@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "source": "fictional-design-study",
+  "units": "metres",
+  "placements": {
+    "sink": {"cutout": [0.80, 0.46]}
+  },
+  "categories": {
+    "faucet": {
+      "models": {
+        "arc": {"name_fa": "شیر قوس", "geometry": "round_arch", "finishes": ["champagne", "graphite"]},
+        "fold": {"name_fa": "شیر تا", "geometry": "square_bridge", "finishes": ["champagne", "graphite"]}
+      }
+    },
+    "sink": {
+      "models": {
+        "single": {"name_fa": "سینک تک‌لگن", "geometry": "single_bowl", "finishes": ["brushed-steel", "smoked-steel"]},
+        "split": {"name_fa": "سینک یک‌ونیم لگن", "geometry": "one_and_half_bowl", "finishes": ["brushed-steel", "smoked-steel"]}
+      }
+    }
+  },
+  "finishes": {
+    "champagne": {"name_fa": "شامپاینی ساتن", "linear_rgb": [0.72, 0.47, 0.225], "metallic": 0.93, "roughness": 0.255},
+    "graphite": {"name_fa": "گرافیتی مات", "linear_rgb": [0.075, 0.071, 0.064], "metallic": 0.80, "roughness": 0.315},
+    "brushed-steel": {"name_fa": "استیل برس‌خورده", "linear_rgb": [0.65, 0.66, 0.65], "metallic": 0.98, "roughness": 0.295},
+    "smoked-steel": {"name_fa": "استیل دودی", "linear_rgb": [0.205, 0.186, 0.164], "metallic": 0.90, "roughness": 0.35}
+  }
+}

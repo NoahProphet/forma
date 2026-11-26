@@ -1,0 +1,40 @@
+{% load static %}
+{% if home_categories or building_consult %}
+<section class="wrap showroom-index" id="home-02" aria-labelledby="showroom-index-heading">
+  <div class="section-heading">
+    <h2 id="showroom-index-heading">{% if home_categories %}دسته‌بندی محصولات{% else %}فروشگاه{% endif %}</h2>
+  </div>
+  {% if home_categories %}
+  <div class="home-category-browser">
+    <div class="home-category-tabs" role="tablist" aria-label="انتخاب دسته‌بندی" aria-orientation="vertical" hidden>
+      {% for tile in home_categories %}
+      <button id="home-category-tab-{{ forloop.counter }}" type="button" role="tab" aria-controls="home-category-panel-{{ forloop.counter }}">
+        {{ tile.label }}
+      </button>
+      {% endfor %}
+    </div>
+    <div class="home-category-panels">
+      {% for tile in home_categories %}
+      <div class="home-category-panel" id="home-category-panel-{{ forloop.counter }}">
+        <a class="home-category-card{% if not tile.image %} home-category-card-plain{% endif %}" href="{{ tile.url }}" aria-labelledby="home-category-title-{{ forloop.counter }}">
+          {% if tile.image %}<img src="{{ tile.image.url }}" alt="" loading="lazy" decoding="async">{% endif %}
+          <span class="home-category-copy">
+            <strong id="home-category-title-{{ forloop.counter }}">{{ tile.label }}</strong>
+            {% if tile.description %}<span class="home-category-description">{{ tile.description }}</span>{% endif %}
+            {% include "partials/icon.html" with name="arrow" %}
+          </span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <script defer src="{% static 'js/home-categories.js' %}"></script>
+  {% endif %}
+  <div class="home-category-links">
+    <a class="text-link" href="{% url 'shop' %}">همه محصولات {% include "partials/icon.html" with name="arrow" %}</a>
+    {% if building_consult %}
+    <a class="text-link" href="{% url 'contact' %}?kind=consult#request">مشاوره تجهیزات ساختمان {% include "partials/icon.html" with name="arrow" %}</a>
+    {% endif %}
+  </div>
+</section>
+{% endif %}

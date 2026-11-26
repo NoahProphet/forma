@@ -1,0 +1,180 @@
+{
+  "id": "rasht-garden-v1",
+  "title": "آشپزخانه تعاملی فرما",
+  "groups": {
+    "cooking": [
+      "hood",
+      "cooktop"
+    ],
+    "water": [
+      "faucet",
+      "sink"
+    ]
+  },
+  "slots": {
+    "faucet": {
+      "name": "شیر آشپزخانه",
+      "models": [
+        {
+          "id": "arc",
+          "name": "قوس",
+          "variants": [
+            {
+              "id": "champagne",
+              "name": "شامپاینی ساتن",
+              "color": "#b49768",
+              "stock": 3
+            },
+            {
+              "id": "graphite",
+              "name": "گرافیتی مات",
+              "color": "#565350",
+              "stock": 0
+            }
+          ]
+        },
+        {
+          "id": "fold",
+          "name": "زاویه",
+          "variants": [
+            {
+              "id": "champagne",
+              "name": "شامپاینی ساتن",
+              "color": "#b49768",
+              "stock": 0
+            },
+            {
+              "id": "graphite",
+              "name": "گرافیتی مات",
+              "color": "#565350",
+              "stock": 3
+            }
+          ]
+        }
+      ]
+    },
+    "sink": {
+      "name": "سینک",
+      "models": [
+        {
+          "id": "single",
+          "name": "تک‌لگن",
+          "variants": [
+            {
+              "id": "brushed-steel",
+              "name": "استیل برس‌خورده",
+              "color": "#babbb7",
+              "stock": 3
+            },
+            {
+              "id": "smoked-steel",
+              "name": "استیل دودی",
+              "color": "#726961",
+              "stock": 0
+            }
+          ]
+        },
+        {
+          "id": "split",
+          "name": "یک‌ونیم لگن",
+          "variants": [
+            {
+              "id": "brushed-steel",
+              "name": "استیل برس‌خورده",
+              "color": "#babbb7",
+              "stock": 0
+            },
+            {
+              "id": "smoked-steel",
+              "name": "استیل دودی",
+              "color": "#726961",
+              "stock": 3
+            }
+          ]
+        }
+      ]
+    },
+    "cooktop": {
+      "name": "اجاق صفحه‌ای",
+      "models": [
+        {
+          "id": "field",
+          "name": "القایی چهار ناحیه",
+          "variants": [
+            {
+              "id": "obsidian",
+              "name": "شیشه مشکی",
+              "color": "#302e2b",
+              "stock": 3
+            },
+            {
+              "id": "silver",
+              "name": "نقره‌ای ساتن",
+              "color": "#a6a29d",
+              "stock": 0
+            }
+          ]
+        },
+        {
+          "id": "flame",
+          "name": "گاز سه‌شعله",
+          "variants": [
+            {
+              "id": "obsidian",
+              "name": "شیشه مشکی",
+              "color": "#302e2b",
+              "stock": 0
+            },
+            {
+              "id": "silver",
+              "name": "نقره‌ای ساتن",
+              "color": "#a6a29d",
+              "stock": 3
+            }
+          ]
+        }
+      ]
+    },
+    "hood": {
+      "name": "هود",
+      "models": [
+        {
+          "id": "bell",
+          "name": "ناقوس",
+          "variants": [
+            {
+              "id": "bronze",
+              "name": "برنز تیره",
+              "color": "#65503b",
+              "stock": 3
+            },
+            {
+              "id": "steel",
+              "name": "استیل ساتن",
+              "color": "#b2b4ae",
+              "stock": 0
+            }
+          ]
+        },
+        {
+          "id": "canopy",
+          "name": "سایبان",
+          "variants": [
+            {
+              "id": "bronze",
+              "name": "برنز تیره",
+              "color": "#65503b",
+              "stock": 0
+            },
+            {
+              "id": "steel",
+              "name": "استیل ساتن",
+              "color": "#b2b4ae",
+              "stock": 3
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<article class="project-card">
+  <a href="{{ item.get_absolute_url }}">
+    {% with cover=item.card_image|default:item.image %}
+    {% if cover %}<div class="media-frame"><img src="{{ cover.url }}" alt="" loading="lazy" decoding="async"></div>{% endif %}
+    {% endwith %}
+    <div class="project-card-title">
+      <div><{{ heading|default:"h3" }} class="project-title">{{ item.title }}</{{ heading|default:"h3" }}>{% if item.is_demo %}<small>نمونه‌چیدمان</small>{% endif %}</div>
+      {% include "partials/icon.html" with name="arrow" %}
+    </div>
+  </a>
+</article>

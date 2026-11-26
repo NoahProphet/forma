@@ -1,0 +1,22 @@
+<div class="shop-purchase">
+  {% if variant.purchasable %}
+  <form method="post" action="{% url 'cart-change' variant.pk %}" hx-post="{% url 'cart-change' variant.pk %}"
+        hx-target="#shop-add-{{ variant.pk }}" hx-swap="innerHTML" hx-disabled-elt="find button"
+        hx-sync="#main:queue all" data-shop-buy>
+    {% csrf_token %}
+    <input type="hidden" name="operation" value="add">
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="shop_return" value="{{ request.get_full_path }}#card-{{ item.slug }}">
+    <button class="button shop-buy" type="submit" aria-label="افزودن {{ item.name }}، {{ variant.finish.name }} به سبد خرید">
+      <span class="shop-buy-default">{% include "partials/icon.html" with name="cart" %} افزودن به سبد</span>
+      <span class="shop-buy-pending" aria-hidden="true">در حال افزودن…</span>
+      <span class="shop-buy-done" aria-hidden="true">{% include "partials/icon.html" with name="check" %} به سبد اضافه شد</span>
+    </button>
+  </form>
+  <div id="shop-add-{{ variant.pk }}" class="shop-add-status" role="status" aria-live="polite"></div>
+  {% else %}
+  <a class="button button-outline" href="{{ item.get_absolute_url }}{% if variant %}?finish={{ variant.finish.slug }}{% endif %}#purchase">
+    {% if variant.stock == 0 %}مشاهده محصول{% else %}مشاهده و استعلام{% endif %}
+  </a>
+  {% endif %}
+</div>

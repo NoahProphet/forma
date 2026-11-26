@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+{% block content %}
+<article class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><a href="{% url 'journal' %}">مجله فرما</a></nav>
+  <div class="page-heading" data-enter><div><h1>{{ article.title }}</h1><p>{{ article.summary }}</p></div></div>
+  {% if article.image %}<img class="editorial-cover" src="{{ article.image.url }}" alt="" fetchpriority="high">{% endif %}
+  <div class="prose editorial-body">{{ article.body|linebreaks }}</div>
+  <a class="text-link" href="{% url 'journal' %}">مطالب مجله فرما {% include "partials/icon.html" with name="arrow" %}</a>
+</article>
+{% endblock %}

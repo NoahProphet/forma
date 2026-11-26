@@ -1,0 +1,16 @@
+{% load forma l10n %}
+<fieldset class="shop-facet price-filter">
+  <legend class="shop-facet-title">محدوده قیمت (تومان)</legend>
+  {% if price_bounds.low is not None and price_bounds.high > price_bounds.low %}
+  <div class="shop-range" data-price-range data-min="{{ price_bounds.low|unlocalize }}" data-max="{{ price_bounds.high|unlocalize }}" dir="ltr" hidden>
+    <div class="shop-range-values"><output for="range-low"></output><output for="range-high"></output></div>
+    <div class="shop-range-track">
+      <input id="range-low" type="range" aria-label="حداقل قیمت به تومان">
+      <input id="range-high" type="range" aria-label="حداکثر قیمت به تومان">
+    </div>
+  </div>
+  {% endif %}
+  <label for="filter-low">از</label><label for="filter-high">تا</label>
+  <input id="filter-low" name="low" inputmode="numeric" maxlength="14" value="{% if filters.low is not None %}{{ filters.low|fa }}{% endif %}">
+  <input id="filter-high" name="high" inputmode="numeric" maxlength="14" value="{% if filters.high is not None %}{{ filters.high|fa }}{% endif %}">
+</fieldset>

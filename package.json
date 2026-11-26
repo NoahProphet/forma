@@ -1,0 +1,16 @@
+{
+  "name": "forma-storefront",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/vendor-assets.mjs && tailwindcss -i styles/storefront.css -o static/css/storefront.css --minify",
+    "watch": "node scripts/vendor-assets.mjs && tailwindcss -i styles/storefront.css -o static/css/storefront.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.18",
+    "tailwindcss": "4.1.18"
+  },
+  "dependencies": {
+    "htmx.org": "2.0.11",
+    "@fontsource-variable/vazirmatn": "5.2.8"
+  }
+}

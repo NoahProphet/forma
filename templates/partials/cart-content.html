@@ -1,0 +1,51 @@
+{% load forma %}
+<div id="cart-content">
+  {% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+  {% if updated %}<p class="notice success" role="status">سبد خرید به‌روزرسانی شد.</p>{% endif %}
+  <p id="cart-loading" class="htmx-indicator loading-label" role="status">در حال به‌روزرسانی سبد…</p>
+  {% if rows %}
+  <div class="basket-layout">
+    <div>
+      {% for line in rows %}
+      <article class="basket-row">
+        <a class="basket-photo" href="{{ line.variant.product.get_absolute_url }}?finish={{ line.variant.finish.slug }}" tabindex="-1" aria-hidden="true">
+          {% if line.image %}<img src="{{ line.image.url }}" alt="" width="120" height="112">{% endif %}
+        </a>
+        <div class="basket-info">
+          <h2><a href="{{ line.variant.product.get_absolute_url }}?finish={{ line.variant.finish.slug }}">{{ line.variant.product.name }}</a></h2>
+          <p>{{ line.variant.finish.name }} · <bdi>{{ line.variant.sku }}</bdi></p>
+          {% include "partials/price.html" with amount=line.variant.price %}
+          {% if not line.can_request %}<p class="line-warning">موجودی یا قیمت این کالا تغییر کرده است. تعداد را اصلاح کنید یا کالا را حذف کنید.</p>{% endif %}
+        </div>
+        <div class="basket-edit">
+          {% if line.variant.purchasable %}
+          <form class="quantity-form" method="post" action="{% url 'cart-change' line.variant.pk %}" hx-post="{% url 'cart-change' line.variant.pk %}" hx-target="#cart-content" hx-swap="outerHTML" hx-sync="body:drop" hx-indicator="#cart-loading" hx-disabled-elt="find button">
+            {% csrf_token %}
+            <input type="hidden" name="operation" value="set">
+            <label for="qty-{{ line.pk }}">تعداد</label>
+            <input id="qty-{{ line.pk }}" name="quantity" type="text" inputmode="numeric" maxlength="2" value="{{ line.quantity|fa }}" required>
+            <button id="update-{{ line.pk }}" class="button button-outline" type="submit">ثبت تعداد</button>
+          </form>
+          {% else %}<p>تعداد {{ line.quantity|fa }}</p>{% endif %}
+          <form method="post" action="{% url 'cart-change' line.variant.pk %}" hx-post="{% url 'cart-change' line.variant.pk %}" hx-target="#cart-content" hx-swap="outerHTML" hx-sync="body:drop" hx-indicator="#cart-loading" hx-disabled-elt="find button">
+            {% csrf_token %}<input type="hidden" name="operation" value="remove">
+            <button class="text-link" id="remove-{{ line.pk }}" type="submit" aria-label="حذف {{ line.variant.product.name }}، {{ line.variant.finish.name }}">حذف کالا</button>
+          </form>
+        </div>
+        <div class="basket-line-total"><span>جمع کالا</span>{% include "partials/price.html" with amount=line.amount %}</div>
+      </article>
+      {% endfor %}
+    </div>
+    <aside class="order-summary" aria-labelledby="order-heading">
+      <h2 id="order-heading" tabindex="-1">خلاصه سبد</h2>
+      <div class="summary-total"><span>جمع محصولات</span>{% include "partials/price.html" with amount=total %}</div>
+      {% if basket_demo %}<p class="note">سبد شامل کالای نمونه فروشگاه است.</p>{% endif %}
+      <p>پرداخت و ارسال با شوروم هماهنگ می‌شود.</p>
+      {% if can_request %}<a class="button" href="{% url 'checkout' %}">هماهنگی خرید {% include "partials/icon.html" with name="arrow" %}</a>{% endif %}
+    </aside>
+  </div>
+  {% else %}
+  <div class="empty-state"><h2 id="order-heading" tabindex="-1">سبد خرید شما خالی است</h2><p>محصول و رنگ دلخواه را در فروشگاه انتخاب کنید.</p><a class="button" href="{% url 'shop' %}">مشاهده محصولات {% include "partials/icon.html" with name="arrow" %}</a></div>
+  {% endif %}
+</div>
+{% if swap_count %}{% include "partials/cart-count.html" %}{% include "partials/header-cart-preview.html" %}{% endif %}

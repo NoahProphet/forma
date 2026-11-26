@@ -1,0 +1,5 @@
+<div id="add-status" class="inline-feedback" role="status" aria-live="polite">
+  {% if error %}<p class="notice error">{{ error }}</p>{% endif %}
+  {% if added %}<p class="notice success">{% include "partials/icon.html" with name="check" %} به سبد خرید اضافه شد. <a href="{% url 'cart' %}">مشاهده سبد</a></p>{% endif %}
+</div>
+{% if swap_count %}{% include "partials/cart-count.html" %}{% include "partials/header-cart-preview.html" %}{% endif %}

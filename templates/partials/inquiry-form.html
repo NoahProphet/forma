@@ -1,0 +1,13 @@
+<form class="inquiry-form" method="post" action="{{ request.get_full_path }}#request">
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="notice error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+  {% if form.errors %}<p class="notice error" role="alert">اطلاعات مشخص‌شده را اصلاح کنید و دوباره درخواست را بفرستید.</p>{% endif %}
+  {% for field in form %}
+    <div class="field{% if field.errors %} field-error{% endif %}">
+      {{ field.label_tag }}{{ field }}
+      {% if field.help_text %}<p id="{{ field.auto_id }}_helptext" class="quiet">{{ field.help_text }}</p>{% endif %}
+      {{ field.errors }}
+    </div>
+  {% endfor %}
+  <button type="submit" class="button">{{ button_label|default:"ثبت درخواست" }} {% include "partials/icon.html" with name="arrow" %}</button>
+</form>

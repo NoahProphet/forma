@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بررسی دو نمای آشپزخانه فرما</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f3eb;color:#251f19;font:16px/1.65 Tahoma,sans-serif}main{max-width:1370px;margin:auto;padding:16px}h1{font-size:1.4rem;margin:0}p{margin:.25em 0 .75em;color:#625849}figure{margin:0;position:relative;background:#ded4c4;aspect-ratio:8/5}figure img{position:absolute;display:block}#base{inset:0;width:100%;height:100%}fieldset{border:0;padding:0;margin:0}label{display:inline-flex;align-items:center;gap:.3em;min-height:44px;padding:0 .45em;cursor:pointer}legend{font-weight:bold}form{display:flex;flex-wrap:wrap;gap:.8em 2.5em;margin:.8em 0}input{accent-color:#74502c}a{color:inherit}img[hidden]{display:none}img{pointer-events:none}
+</style>
+<main>
+<h1>آشپزخانه فرما</h1><p>نمونه طراحی برای بررسی فضا، زاویه دوربین و تجهیزات فرضی</p>
+<figure aria-label="نمای آشپزخانه با تجهیزات انتخاب‌شده"><img id="base" src="A.jpg" alt="آشپزخانه با جزیره سنگی و کابینت گردویی"><img data-slot="sink" alt="" hidden><img data-slot="faucet" alt="" hidden><img data-slot="interaction" alt="" hidden></figure>
+<form>
+<fieldset><legend>زاویه دید</legend><label><input type="radio" name="camera" value="A" checked>رو به باغ</label><label><input type="radio" name="camera" value="B">رو به کابینت‌ها</label></fieldset>
+<fieldset><legend>شیر آشپزخانه</legend><label><input type="radio" name="faucet" value="0" checked>قوس · شامپاینی</label><label><input type="radio" name="faucet" value="1">زاویه‌دار · گرافیتی</label></fieldset>
+<fieldset><legend>سینک</legend><label><input type="radio" name="sink" value="0" checked>تک‌لگن · استیل</label><label><input type="radio" name="sink" value="1">یک‌ونیم لگن · استیل دودی</label></fieldset>
+</form>
+<p id="image-error" role="alert" hidden>تصویر بارگذاری نشد. دوباره انتخاب کنید.</p>
+<noscript><p><a href="A.jpg">نمای رو به باغ</a> · <a href="B.jpg">نمای رو به کابینت‌ها</a></p></noscript>
+</main>
+<script src="registration.js"></script><script>
+const controls = document.querySelector('form');
+let revision = 0;
+let committed = new FormData(controls);
+async function update() {
+  const current = ++revision;
+  const state = new FormData(controls);
+  const camera = state.get('camera');
+  const view = views[camera];
+  const next = [[document.querySelector('#base'), camera + '.jpg']];
+  const hidden = [];
+  for (const el of document.querySelectorAll('[data-slot]')) {
+    const slot = el.dataset.slot;
+    const active = slot === 'interaction' ? state.get('faucet') === '1' && state.get('sink') === '1' : state.get(slot) === '1';
+    if (active) next.push([el, camera + '-' + slot + '.webp']); else hidden.push(el);
+  }
+  const issue = document.querySelector('#image-error');
+  issue.hidden = true;
+  try {
+    await Promise.all(next.map(([,url]) => { const img = new Image(); img.src = url; return img.decode(); }));
+  } catch {
+    if (current === revision) {
+      for (const input of controls.querySelectorAll('input')) input.checked = committed.get(input.name) === input.value;
+      issue.hidden = false;
+    }
+    return;
+  }
+  if (current !== revision) return;
+  committed = state;
+  for (const el of hidden) el.hidden = true;
+  for (const [el,url] of next) {
+    const box = view.layers[el.dataset.slot];
+    if (box) {
+      const [w,h] = view.size;
+      el.style.left = 100*box[0]/w + '%'; el.style.top = 100*box[1]/h + '%';
+      el.style.width = 100*(box[2]-box[0])/w + '%'; el.style.height = 100*(box[3]-box[1])/h + '%';
+    }
+    el.src = url; el.hidden = false;
+  }
+}
+controls.addEventListener('change',update);
+</script>
+</html>

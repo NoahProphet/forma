@@ -1,0 +1,31 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="{% url 'home' %}" aria-label="فرما، صفحه اصلی"><img class="footer-logo" src="{% static 'media/logo.png' %}" alt="FORMA" width="221" height="79"></a>
+        <p>تجهیزات آشپزخانه، حمام و ساختمان</p>
+      </div>
+      <nav aria-label="فروشگاه و راهنما">
+        <h2>فروشگاه و راهنما</h2>
+        <a href="{% url 'shop' %}">مشاهده محصولات</a>
+        <a href="{% url 'compare' %}">مقایسه محصولات</a>
+        <a href="{% url 'faq' %}">پرسش‌های متداول</a>
+      </nav>
+      <nav aria-label="درباره فرما">
+        <h2>درباره فرما</h2>
+        <a href="{% url 'about' %}">درباره ما</a>
+        <a href="{% url 'projects' %}">پروژه‌ها</a>
+        <a href="{% url 'journal' %}">مجله فرما</a>
+      </nav>
+      {% if request.resolver_match.url_name != 'home' %}
+      <div>
+        <h2>شوروم رشت</h2>
+        <address>{{ showroom_address }}</address>
+        <a href="tel:{{ showroom_phone }}"><bdi dir="ltr">{{ showroom_phone }}</bdi></a>
+        {% if showroom_instagram %}<a href="{{ showroom_instagram }}">اینستاگرام فرما</a>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,26 @@
+{% load forma %}
+<div id="header-cart-preview" class="header-cart-panel" role="region" aria-labelledby="header-cart-heading"{% if swap_count %} hx-swap-oob="true"{% endif %}>
+  <div class="header-cart-heading">
+    <h2 id="header-cart-heading">سبد خرید شما</h2>
+    <span>{{ cart_count|fa }} کالا</span>
+  </div>
+  {% if header_basket.rows %}
+  <ul class="header-cart-items" role="list">
+    {% for line in header_basket.rows %}
+    <li class="header-cart-item">
+      <a href="{{ line.variant.product.get_absolute_url }}?finish={{ line.variant.finish.slug }}">
+        {% if line.image %}<img src="{{ line.image.url }}" alt="" width="48" height="48" loading="lazy">{% endif %}
+        <span><strong>{{ line.variant.product.name }}</strong><small>{{ line.variant.finish.name }} · تعداد {{ line.quantity|fa }}</small></span>
+      </a>
+      {% include "partials/price.html" with amount=line.amount %}
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="header-cart-total">
+    <span>جمع کالاها</span>{% include "partials/price.html" with amount=header_basket.total %}
+  </div>
+  {% else %}
+  <p class="header-cart-empty">سبد خرید شما خالی است.</p>
+  {% endif %}
+  <a class="button header-cart-view" href="{% url 'cart' %}">مشاهده سبد خرید {% include "partials/icon.html" with name="arrow" %}</a>
+</div>

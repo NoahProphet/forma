@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><span aria-current="page">برندها</span></nav>
+  <div class="page-heading"><div><h1>برندها</h1><p>محصولات فروشگاه را بر اساس برند ببینید.</p></div></div>
+  <div class="brand-grid">
+    {% for brand in brands %}
+    <a href="{% url 'shop' %}?brand={{ brand.slug }}"><strong><bdi>{{ brand.name }}</bdi></strong>{% if brand.is_demo %}<small>نمونه توسعه</small>{% endif %}<span>مشاهده محصولات {% include "partials/icon.html" with name="arrow" %}</span></a>
+    {% empty %}<p>هنوز برندی در فروشگاه منتشر نشده است.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

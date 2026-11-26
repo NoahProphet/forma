@@ -1,0 +1,3 @@
+{% if error %}<p class="shop-add-error">{{ error }}</p>{% endif %}
+{% if added %}<span class="sr-only" data-added>به سبد خرید اضافه شد.</span>{% endif %}
+{% if swap_count %}{% include "partials/cart-count.html" %}{% include "partials/header-cart-preview.html" %}{% endif %}

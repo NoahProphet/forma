@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_scripts %}<script defer src="{% static 'js/shop.js' %}"></script>{% endblock %}
+{% block content %}
+  {% include "partials/catalog.html" %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load forma %}
+{% block content %}
+<div class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'cart' %}">سبد خرید</a><span>/</span><span aria-current="page">هماهنگی خرید</span></nav>
+  <div class="page-heading"><div><h1>هماهنگی خرید</h1><p>درخواست خرید را برای بررسی موجودی، ارسال و پرداخت ثبت کنید.</p></div></div>
+  {% if rows %}
+  <div class="checkout-layout">
+    <section class="order-summary" aria-labelledby="checkout-summary">
+      <h2 id="checkout-summary">محصولات انتخابی</h2>
+      {% for line in rows %}<div class="checkout-line"><div><strong>{{ line.variant.product.name }}</strong><p>{{ line.variant.finish.name }} · تعداد {{ line.quantity|fa }}</p></div>{% include "partials/price.html" with amount=line.amount %}</div>{% endfor %}
+      <div class="summary-total"><span>جمع کل محصولات</span>{% include "partials/price.html" with amount=total %}</div>
+      {% if basket_demo %}<p class="quiet">سبد شامل کالای نمونه توسعه است.</p>{% endif %}
+      <a class="text-link" href="{% url 'cart' %}">ویرایش سبد خرید {% include "partials/icon.html" with name="arrow" %}</a>
+    </section>
+    <section id="request">
+      <h2>اطلاعات تماس</h2>
+      {% if can_request %}
+      <p>درخواست در سامانه شوروم ثبت می‌شود. پرداخت آنلاین در دسترس نیست.</p>
+      {% include "partials/inquiry-form.html" with button_label="ثبت درخواست خرید" %}
+      {% else %}<p>پیش از ثبت، موجودی یا تعداد کالاهای سبد را بررسی کنید.</p><a class="button" href="{% url 'cart' %}">بازگشت به سبد خرید</a>{% endif %}
+      <a class="text-link" href="tel:{{ showroom_phone }}">تماس با شوروم <bdi>{{ showroom_phone }}</bdi></a>
+    </section>
+  </div>
+  {% else %}
+  <div class="empty-state"><h2>سبد خرید خالی است</h2><a class="button" href="{% url 'shop' %}">مشاهده محصولات</a></div>
+  {% endif %}
+</div>
+{% endblock %}

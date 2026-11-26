@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.log
+*.blend1
+/media/
+node_modules/
+collected-static/
+.taste-skill/
+.impeccable/*
+!.impeccable/design.json

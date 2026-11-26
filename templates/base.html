@@ -1,0 +1,43 @@
+{% load static forma %}
+<!doctype html>
+<html lang="fa" dir="rtl" data-type="{% block page_type %}product{% endblock %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ title|default:"شوروم فرما" }} | فرما</title>
+  {% if description %}
+  <meta name="description" content="{{ description }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:site_name" content="فرما">
+  <meta property="og:title" content="{{ title }} | فرما">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ share_image }}">
+  <meta name="twitter:card" content="summary_large_image">
+  {% endif %}
+  {% if private_page %}<meta name="robots" content="noindex,follow">{% endif %}
+  <meta name="site-kind" content="other">
+  {% block taste_meta %}<meta name="page-type" content="product">{% endblock %}
+  <meta name="theme-color" content="#fffcf6">
+  <meta name="htmx-config" content='{"historyRestoreAsHxRequest":false,"allowEval":false,"selfRequestsOnly":true,"includeIndicatorStyles":false,"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"422","swap":true},{"code":"[45]..","swap":false,"error":true}]}'>
+  <link rel="icon" href="{% static 'media/icon.png' %}" type="image/png">
+  <link rel="stylesheet" href="{% static 'css/storefront.css' %}">
+  <script defer src="{% static 'js/htmx.min.js' %}"></script>
+  <script defer src="{% static 'js/storefront.js' %}"></script>
+  {% block page_scripts %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}" hx-history="false">
+  <a class="skip-link" href="#main">رفتن به محتوا</a>
+  {% include "partials/header.html" %}
+  <main id="main" tabindex="-1">
+    <div id="network-status" class="wrap network-status notice error" data-network-status role="alert" tabindex="-1" hidden></div>
+    {% if messages %}<div class="wrap message-stack">
+      {% for message in messages %}<p class="notice {{ message.tags }}" role="status">{{ message|fa }}</p>{% endfor %}
+    </div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+</body>
+</html>

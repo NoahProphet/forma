@@ -1,0 +1,14 @@
+{% load forma %}
+{% if active_filters %}
+<ul class="active-filters" aria-label="فیلترهای اعمال‌شده" role="list">
+  {% for filter in active_filters %}
+  <li>
+    <a id="chip-{{ chip_location|default:'results' }}-{{ filter.key }}" href="{{ filter.url }}" hx-get="{{ filter.url }}" hx-target="#catalog-panel" hx-swap="outerHTML" hx-indicator="#catalog-loading, #filters-loading" hx-sync="#catalog-panel:replace">
+      <span class="sr-only">حذف فیلتر </span>
+      <span>{% if filter.label %}{{ filter.label }} · {% endif %}{% if filter.is_price %}{{ filter.value|toman }} تومان{% else %}<bdi>{{ filter.value }}</bdi>{% endif %}</span>
+      {% include "partials/icon.html" with name="close" %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

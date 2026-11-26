@@ -1,0 +1,468 @@
+{
+  "id": "rasht-garden-v1",
+  "title": "آشپزخانه تعاملی فرما",
+  "groups": {
+    "cooking": [
+      "hood",
+      "cooktop"
+    ],
+    "water": [
+      "faucet",
+      "sink"
+    ]
+  },
+  "slots": {
+    "faucet": {
+      "name": "شیر آشپزخانه",
+      "models": [
+        {
+          "id": "arc",
+          "name": "قوس",
+          "variants": [
+            {
+              "id": "champagne",
+              "name": "شامپاینی ساتن",
+              "color": "#b49768",
+              "stock": 3,
+              "index": 0,
+              "thumb": "faucet-arc.champagne.webp"
+            },
+            {
+              "id": "graphite",
+              "name": "گرافیتی مات",
+              "color": "#565350",
+              "stock": 0,
+              "index": 1,
+              "thumb": "faucet-arc.graphite.webp"
+            }
+          ]
+        },
+        {
+          "id": "fold",
+          "name": "زاویه",
+          "variants": [
+            {
+              "id": "champagne",
+              "name": "شامپاینی ساتن",
+              "color": "#b49768",
+              "stock": 0,
+              "index": 2,
+              "thumb": "faucet-fold.champagne.webp"
+            },
+            {
+              "id": "graphite",
+              "name": "گرافیتی مات",
+              "color": "#565350",
+              "stock": 3,
+              "index": 3,
+              "thumb": "faucet-fold.graphite.webp"
+            }
+          ]
+        }
+      ]
+    },
+    "sink": {
+      "name": "سینک",
+      "models": [
+        {
+          "id": "single",
+          "name": "تک‌لگن",
+          "variants": [
+            {
+              "id": "brushed-steel",
+              "name": "استیل برس‌خورده",
+              "color": "#babbb7",
+              "stock": 3,
+              "index": 0,
+              "thumb": "sink-single.brushed-steel.webp"
+            },
+            {
+              "id": "smoked-steel",
+              "name": "استیل دودی",
+              "color": "#726961",
+              "stock": 0,
+              "index": 1,
+              "thumb": "sink-single.smoked-steel.webp"
+            }
+          ]
+        },
+        {
+          "id": "split",
+          "name": "یک‌ونیم لگن",
+          "variants": [
+            {
+              "id": "brushed-steel",
+              "name": "استیل برس‌خورده",
+              "color": "#babbb7",
+              "stock": 0,
+              "index": 2,
+              "thumb": "sink-split.brushed-steel.webp"
+            },
+            {
+              "id": "smoked-steel",
+              "name": "استیل دودی",
+              "color": "#726961",
+              "stock": 3,
+              "index": 3,
+              "thumb": "sink-split.smoked-steel.webp"
+            }
+          ]
+        }
+      ]
+    },
+    "cooktop": {
+      "name": "اجاق صفحه‌ای",
+      "models": [
+        {
+          "id": "field",
+          "name": "القایی چهار ناحیه",
+          "variants": [
+            {
+              "id": "obsidian",
+              "name": "شیشه مشکی",
+              "color": "#302e2b",
+              "stock": 3,
+              "index": 0,
+              "thumb": "cooktop-field.obsidian.webp"
+            },
+            {
+              "id": "silver",
+              "name": "نقره‌ای ساتن",
+              "color": "#a6a29d",
+              "stock": 0,
+              "index": 1,
+              "thumb": "cooktop-field.silver.webp"
+            }
+          ]
+        },
+        {
+          "id": "flame",
+          "name": "گاز سه‌شعله",
+          "variants": [
+            {
+              "id": "obsidian",
+              "name": "شیشه مشکی",
+              "color": "#302e2b",
+              "stock": 0,
+              "index": 2,
+              "thumb": "cooktop-flame.obsidian.webp"
+            },
+            {
+              "id": "silver",
+              "name": "نقره‌ای ساتن",
+              "color": "#a6a29d",
+              "stock": 3,
+              "index": 3,
+              "thumb": "cooktop-flame.silver.webp"
+            }
+          ]
+        }
+      ]
+    },
+    "hood": {
+      "name": "هود",
+      "models": [
+        {
+          "id": "bell",
+          "name": "ناقوس",
+          "variants": [
+            {
+              "id": "bronze",
+              "name": "برنز تیره",
+              "color": "#65503b",
+              "stock": 3,
+              "index": 0,
+              "thumb": "hood-bell.bronze.webp"
+            },
+            {
+              "id": "steel",
+              "name": "استیل ساتن",
+              "color": "#b2b4ae",
+              "stock": 0,
+              "index": 1,
+              "thumb": "hood-bell.steel.webp"
+            }
+          ]
+        },
+        {
+          "id": "canopy",
+          "name": "سایبان",
+          "variants": [
+            {
+              "id": "bronze",
+              "name": "برنز تیره",
+              "color": "#65503b",
+              "stock": 0,
+              "index": 2,
+              "thumb": "hood-canopy.bronze.webp"
+            },
+            {
+              "id": "steel",
+              "name": "استیل ساتن",
+              "color": "#b2b4ae",
+              "stock": 3,
+              "index": 3,
+              "thumb": "hood-canopy.steel.webp"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "views": {
+    "A": {
+      "name": "رو به باغ",
+      "size": [
+        1792,
+        1120
+      ],
+      "hits": {
+        "faucet": {
+          "arc.champagne": [
+            844,
+            516,
+            909,
+            647
+          ],
+          "arc.graphite": [
+            844,
+            516,
+            909,
+            647
+          ],
+          "fold.champagne": [
+            847,
+            530,
+            909,
+            647
+          ],
+          "fold.graphite": [
+            847,
+            530,
+            909,
+            647
+          ]
+        },
+        "sink": {
+          "single.brushed-steel": [
+            706,
+            637,
+            981,
+            737
+          ],
+          "single.smoked-steel": [
+            706,
+            637,
+            981,
+            737
+          ],
+          "split.brushed-steel": [
+            706,
+            637,
+            981,
+            727
+          ],
+          "split.smoked-steel": [
+            706,
+            637,
+            981,
+            727
+          ]
+        },
+        "cooktop": {
+          "field.obsidian": [
+            913,
+            554,
+            1105,
+            579
+          ],
+          "field.silver": [
+            913,
+            554,
+            1105,
+            579
+          ],
+          "flame.obsidian": [
+            909,
+            547,
+            1109,
+            580
+          ],
+          "flame.silver": [
+            909,
+            547,
+            1109,
+            580
+          ]
+        },
+        "hood": {
+          "bell.bronze": [
+            923,
+            106,
+            1098,
+            402
+          ],
+          "bell.steel": [
+            923,
+            106,
+            1098,
+            402
+          ],
+          "canopy.bronze": [
+            900,
+            115,
+            1122,
+            390
+          ],
+          "canopy.steel": [
+            900,
+            115,
+            1122,
+            390
+          ]
+        }
+      },
+      "groups": {
+        "cooking": [
+          862,
+          84,
+          1160,
+          602
+        ],
+        "water": [
+          668,
+          494,
+          1019,
+          759
+        ]
+      }
+    },
+    "B": {
+      "name": "رو به کابینت‌ها",
+      "size": [
+        1792,
+        1120
+      ],
+      "hits": {
+        "faucet": {
+          "arc.champagne": [
+            853,
+            519,
+            927,
+            685
+          ],
+          "arc.graphite": [
+            853,
+            519,
+            927,
+            685
+          ],
+          "fold.champagne": [
+            853,
+            537,
+            924,
+            685
+          ],
+          "fold.graphite": [
+            853,
+            537,
+            924,
+            685
+          ]
+        },
+        "sink": {
+          "single.brushed-steel": [
+            753,
+            667,
+            1103,
+            835
+          ],
+          "single.smoked-steel": [
+            753,
+            667,
+            1103,
+            835
+          ],
+          "split.brushed-steel": [
+            753,
+            667,
+            1103,
+            835
+          ],
+          "split.smoked-steel": [
+            753,
+            667,
+            1103,
+            835
+          ]
+        },
+        "cooktop": {
+          "field.obsidian": [
+            322,
+            538,
+            566,
+            589
+          ],
+          "field.silver": [
+            322,
+            538,
+            566,
+            589
+          ],
+          "flame.obsidian": [
+            316,
+            535,
+            571,
+            590
+          ],
+          "flame.silver": [
+            316,
+            535,
+            571,
+            590
+          ]
+        },
+        "hood": {
+          "bell.bronze": [
+            339,
+            -28,
+            549,
+            358
+          ],
+          "bell.steel": [
+            339,
+            -28,
+            549,
+            358
+          ],
+          "canopy.bronze": [
+            300,
+            -17,
+            585,
+            341
+          ],
+          "canopy.steel": [
+            300,
+            -17,
+            585,
+            341
+          ]
+        }
+      },
+      "groups": {
+        "cooking": [
+          262,
+          0,
+          623,
+          612
+        ],
+        "water": [
+          715,
+          497,
+          1141,
+          857
+        ]
+      }
+    }
+  }
+}
