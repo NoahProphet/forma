@@ -26,7 +26,7 @@ Use the [FORMA website section map](SECTIONS.md) to refer to specific pages, sec
 
 ## Browsing and checkout
 
-- The homepage puts the kitchen scene beside the showroom introduction. The next row links directly to the product types present in the catalog, including sinks, faucets, hoods and cooktops. It also shows a featured product's finish options before the project stories.
+- The homepage opens with a full-bleed showroom photograph and a Persian catalog link. The category gallery leads to the shop. HOME-03 shows the interactive kitchen when an environment is enabled, followed by project stories.
 - The shop supports search, category, brand, finish, availability, a toman price range, sorting, pagination and a comparison list for up to three products. For a shareable local example, open [kitchen products with a matte-black KWC finish](http://127.0.0.1:8011/shop/?category=kitchen&brand=kwc&finish=black&stock=yes).
 - Shop cards show model, finish and stock together with the price. Active filters can be removed individually on the results page and in the mobile drawer.
 - On [the Arc product](http://127.0.0.1:8011/product/arc/) finish links update its imagery, SKU, price, stock, and purchase or quote action together. Product, project and article routes render directly on the server with Persian titles and sharing metadata.
@@ -34,6 +34,8 @@ Use the [FORMA website section map](SECTIONS.md) to refer to specific pages, sec
 - Checkout saves a purchase enquiry with a snapshot of the basket and retains the cart. Contact forms save consultation, price and visit requests in the admin queue. A tracking number confirms a saved request. Staff follow-up currently happens through admin and the showroom phone.
 
 ## Verification
+
+The [implementation report](HANDOFF.md) includes the phase checkpoints, screenshot comparisons, cross-browser results and production dependencies. The [kitchen asset guide](proof/kitchen/README.md) describes how to regenerate the scene and link real products.
 
 Checked Chromium at 1440 and 390 px and checked for horizontal overflow at 320 px. Exercised category browsing, shareable filters, sorting, pagination, Back, product comparison, finish and gallery selection, cart totals and stock rejection, checkout and visit forms, direct product and project metadata, keyboard focus, a failed request, and the standard forms with JavaScript disabled. Django checks also covered CSRF enforcement, cart session isolation and the quote form's selected variant.
 
@@ -44,7 +46,7 @@ The redesign was compared to the previous home, shop, product and filled-cart la
 | Area | Current state and remaining work |
 | --- | --- |
 | Catalog and inventory | Local fixture products, brand assignments, prices, stock and projects are illustrative. Replace them with verified catalog data and building-category products. Staff can edit stock in Django admin. A live stock feed or inventory integration needs a source system. |
-| Images and wordmark | Reused the existing FORMA wordmark and image files from `formaland.ir/public/media`. No third-party stock was added. The kitchen and bath scenes, product photographs and mock projects come from the prototype. Confirm usage clearance and replace development imagery with approved product and completed-project photography before launch. |
+| Images and wordmark | The wordmark, catalog and project photographs come from the neighboring FORMA prototype. Confirm their usage clearance and replace development imagery with approved photography before launch. The separate HOME-03 environment uses original geometry and two credited CC0 material and lighting resources. |
 | Showroom details | The address and landline/mobile are from `photo_2026-11-24_16-32-40.jpg`, the neighboring FORMA identity sheet. Confirm opening hours and supply the exact map pin and official profiles. Set `FORMA_MAP_URL`, `FORMA_WHATSAPP_URL` and `FORMA_INSTAGRAM_URL` to show the respective links. |
 | Payment and fulfilment | Connect a payment provider, pricing and delivery rules, order lifecycle, and inventory reservation when those are available. The current checkout offers showroom coordination. |
 | Requests and reviews | Contact and checkout requests are saved in Django admin. Configure the staff queue owner and delivery channel if notifications are needed. Add a review source and moderation process before publishing customer reviews. |
