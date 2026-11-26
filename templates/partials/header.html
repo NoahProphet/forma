@@ -8,7 +8,7 @@
     <nav class="desktop-nav" aria-label="ناوبری اصلی">{% include "partials/nav-links.html" %}</nav>
     <details class="mobile-menu" data-disclosure>
       <summary class="icon-link" aria-label="منو">{% include "partials/icon.html" with name="menu" %}</summary>
-      <nav aria-label="ناوبری موبایل">{% include "partials/nav-links.html" %}<a href="{% url 'journal' %}">مجله فرما</a><a href="{% url 'faq' %}">پرسش‌های متداول</a></nav>
+      <nav aria-label="ناوبری موبایل">{% include "partials/nav-links.html" %}<a href="{% url 'journal' %}"{% if request.resolver_match.url_name == 'journal' or request.resolver_match.url_name == 'article' %} aria-current="location"{% endif %}>مجله فرما</a><a href="{% url 'faq' %}"{% if request.resolver_match.url_name == 'faq' %} aria-current="page"{% endif %}>پرسش‌های متداول</a></nav>
     </details>
     <div class="nav-tools">
       <details class="search-menu" name="header-tools" data-disclosure>

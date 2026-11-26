@@ -42,7 +42,8 @@
   background: var(--paper);
 }
 * { min-inline-size: 0; }
-body { font-size: 16px; line-height: 1.75; }
+body { min-block-size: 100vh; min-block-size: 100svh; display: flex; flex-direction: column; font-size: 16px; line-height: 1.75; }
+body > main { flex: 1 0 auto; }
 ::selection { color: var(--ink); background: var(--gold); }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 #main:focus-visible { outline-offset: -2px; }
@@ -622,6 +623,10 @@ textarea { min-block-size: 7rem; resize: vertical; }
 .account-actions { gap: .65rem; }
 .inquiry-form { display: grid; gap: .95rem; margin-block: 1.1rem; }
 .inquiry-form label { display: block; font-weight: 620; font-size: var(--text-ui); margin-block-end: .3rem; }
+.field-optional { margin-inline-start: .35rem; color: var(--muted); font-size: var(--text-small); font-weight: 400; }
+.field-error :is(input, textarea, select) { scroll-margin-block: 1rem; }
+.field-errors ul { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin-block-start: .35rem; }
+.field-errors a { display: inline-flex; min-block-size: 32px; align-items: center; font-weight: 620; }
 .inquiry-form .button { justify-self: start; }
 .field-error input, .field-error textarea { border-color: #833624; }
 .errorlist { color: #833624; list-style: none; margin-block-start: .35rem; font-size: var(--text-meta); }
@@ -649,6 +654,7 @@ textarea { min-block-size: 7rem; resize: vertical; }
   .mobile-menu nav { inset-inline-start: 0; width: 100%; display: grid; }
   .mobile-menu nav a { display: flex; align-items: center; min-block-size: 44px; border-block-end: 1px solid var(--line); }
   .mobile-menu nav a:last-child { border: 0; }
+  .mobile-menu nav a[aria-current] { color: var(--focus); font-weight: 720; text-decoration: underline; text-underline-offset: .3em; }
   .nav-brand { grid-column: 2; grid-row: 1; }
   .site-logo { flex-basis: 99px; inline-size: 99px; }
   .nav-tools { grid-column: 3; grid-row: 1; gap: 0; }
