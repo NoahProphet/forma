@@ -300,7 +300,7 @@ def product(request, slug):
         basket_key(request)
     context = {"product": item, "variants": variants, "variant": variant, "gallery": gallery, "photo": active_photo}
     if hx(request):
-        return render(request, "partials/product-choice.html", context)
+        return render(request, "partials/product-choice.html", {**context, "gallery_changed": True})
     related = list(with_cards(products().filter(category=item.category).exclude(pk=item.pk))[:3])
     image = gallery[0]["image"].url if gallery else item.image.url if item.image else ""
     return page(

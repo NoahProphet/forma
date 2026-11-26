@@ -3,7 +3,7 @@
   <div class="product-detail">
     <div class="gallery">
       <div class="gallery-main" id="active-photo">
-        {% if photo %}<img src="{{ photo.image.url }}" alt="{{ photo.alt }}" class="{% if photo.zoom %}photo-closeup{% endif %}" width="1000" height="825" fetchpriority="high">{% else %}<span class="media-empty">تصویر این گزینه در دسترس نیست</span>{% endif %}
+        {% if photo %}<img src="{{ photo.image.url }}" alt="{{ photo.alt }}"{% if gallery_changed %} data-gallery-change{% endif %}{% if photo.zoom %} class="photo-closeup"{% endif %} width="1000" height="825" fetchpriority="high">{% else %}<span class="media-empty">تصویر این گزینه در دسترس نیست</span>{% endif %}
       </div>
       {% if gallery|length > 1 %}
       <div class="thumbnails" role="group" aria-label="تصاویر محصول">
