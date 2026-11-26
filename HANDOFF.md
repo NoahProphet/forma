@@ -1,6 +1,6 @@
 # FORMA implementation and recovery log
 
-Work on branch `feature/home-03-showroom-refinements`. Continue on GPT‑6.2 Astra. Use the first unchecked item below as the next action. Preserve the approved kitchen and the completed phase checkpoints. Run the phases in order. The final delivery is a pull request to `NoahProphet/forma`.
+Delivery is complete on branch `feature/home-03-showroom-refinements`. [Pull request #1](https://github.com/NoahProphet/forma/pull/1) is open for review. All requested work and checkpoints are recorded below.
 
 - [x] Verify the packed kitchen and render two models with two finishes for each of four categories in both approved cameras.
 - [x] Implement HOME-03, read-only demo details and the SKU binding adapter. Three Django tests passed, including all preview links, baked asset coverage and real inventory updates.
@@ -11,7 +11,7 @@ Work on branch `feature/home-03-showroom-refinements`. Continue on GPT‑6.2 Ast
 - [x] Layout. Replaced mobile journal tiles with image/title rows, simplified the brand directory and widened the checkout form on tablets and desktop. Verified populated checkout, brand destinations, all 18 pages and five widths. The layout detector returned zero findings.
 - [x] Delight. Added a copy action beside the selected finish SKU. Confirmed the actual clipboard value for two finishes, keyboard activation, denied-permission selection fallback, 320 px and no-JavaScript rendering.
 - [x] Run the site-wide audit and archive the screenshot comparisons.
-- [ ] Publish the feature branch and open the pull request against the empty main baseline.
+- [x] Pushed the feature branch and opened [pull request #1](https://github.com/NoahProphet/forma/pull/1) for review. The base is the empty initialization commit.
 
 The generated web assets and editable scene are in the repository. The renderer and its temporary PNG outputs can be regenerated independently of Django. The remote was empty on inspection. The local `main` is an empty base commit. No customer database, sessions, environment files or virtual environments belong in the pull request.
 
