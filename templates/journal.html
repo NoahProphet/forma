@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><span aria-current="page">مجله فرما</span></nav>
+  <div class="page-heading"><div><h1>مجله فرما</h1><p>راهنمای انتخاب و نگهداری تجهیزات آشپزخانه و حمام.</p></div></div>
+  <div class="journal-grid">
+    {% for entry in articles %}
+    <article class="journal-card">
+      {% if entry.image %}<a class="media-frame" href="{{ entry.get_absolute_url }}" tabindex="-1" aria-hidden="true"><img src="{{ entry.image.url }}" alt="" loading="lazy" decoding="async"></a>{% endif %}
+      <h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }} {% include "partials/icon.html" with name="arrow" %}</a></h2>
+    </article>
+    {% empty %}<p>هنوز مطلبی در مجله منتشر نشده است.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

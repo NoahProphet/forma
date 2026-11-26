@@ -1,0 +1,29 @@
+{% load static %}
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="nav-brand">
+      <a class="site-logo" href="{% url 'home' %}" aria-label="فرما، صفحه اصلی"><img src="{% static 'media/logo.png' %}" width="221" height="79" alt="FORMA"></a>
+      <a class="nav-location" href="{% url 'contact' %}#showroom">{% include "partials/icon.html" with name="pin" %} شوروم رشت</a>
+    </div>
+    <nav class="desktop-nav" aria-label="ناوبری اصلی">{% include "partials/nav-links.html" %}</nav>
+    <details class="mobile-menu" data-disclosure>
+      <summary class="icon-link" aria-label="منو">{% include "partials/icon.html" with name="menu" %}</summary>
+      <nav aria-label="ناوبری موبایل">{% include "partials/nav-links.html" %}<a href="{% url 'journal' %}"{% if request.resolver_match.url_name == 'journal' or request.resolver_match.url_name == 'article' %} aria-current="location"{% endif %}>مجله فرما</a><a href="{% url 'faq' %}"{% if request.resolver_match.url_name == 'faq' %} aria-current="page"{% endif %}>پرسش‌های متداول</a></nav>
+    </details>
+    <div class="nav-tools">
+      <details class="search-menu" name="header-tools" data-disclosure>
+        <summary class="header-search-trigger" aria-label="جست‌وجوی محصولات" aria-controls="header-search-form">{% include "partials/icon.html" with name="search" %}</summary>
+        <form id="header-search-form" class="site-search" method="get" action="{% url 'shop' %}" role="search">
+          <label for="site-query" class="sr-only">جست‌وجو در فروشگاه</label>
+          <input id="site-query" name="q" type="search" placeholder="نام، برند یا مدل" maxlength="120" required>
+          <button class="site-search-submit" type="submit" aria-label="جست‌وجو">{% include "partials/icon.html" with name="search" %}</button>
+        </form>
+      </details>
+      {% include "partials/header-cart.html" %}
+      <a class="header-account" href="{% if user.is_authenticated %}{% url 'account' %}{% else %}{% url 'login' %}{% endif %}">
+        {% include "partials/icon.html" with name="account" %}
+        <span class="header-account-label">{% if user.is_authenticated %}حساب من{% else %}ورود / ثبت‌نام{% endif %}</span>
+      </a>
+    </div>
+  </div>
+</header>

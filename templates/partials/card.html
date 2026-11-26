@@ -1,0 +1,35 @@
+{% with variant=item.card_variants.0 %}
+<article class="product-card" id="card-{{ item.slug }}">
+  <a class="product-image media-frame" href="{{ item.get_absolute_url }}{% if variant %}?finish={{ variant.finish.slug }}{% endif %}" tabindex="-1" aria-hidden="true">
+    {% if variant.image %}
+      <img src="{{ variant.image.url }}" alt="" loading="lazy" decoding="async">
+    {% elif item.image %}
+      <img src="{{ item.image.url }}" alt="" loading="lazy" decoding="async">
+    {% else %}<span class="media-empty">تصویر در دسترس نیست</span>{% endif %}
+  </a>
+  <div class="product-copy">
+    <{{ heading|default:"h3" }} class="product-title"><a href="{{ item.get_absolute_url }}{% if variant %}?finish={{ variant.finish.slug }}{% endif %}">{{ item.name }}</a></{{ heading|default:"h3" }}>
+    {% if item.brand or item.model %}<p class="card-model">{% if item.brand %}<bdi>{{ item.brand.name }}</bdi>{% endif %}{% if item.brand and item.model %} <span aria-hidden="true">/</span> {% endif %}{% if item.model %}<span class="sr-only">مدل </span><bdi>{{ item.model }}</bdi>{% endif %}</p>{% endif %}
+    {% if variant %}
+    <p class="card-finish">{% if variant.finish.color %}<span class="finish-sample" style="--swatch:{{ variant.finish.color }}" aria-hidden="true"></span>{% endif %}{{ variant.finish.name }}</p>
+    {% endif %}
+    {% if sample_state == 'mixed' and item.is_demo %}<p class="note">محصول نمونه</p>{% endif %}
+    <div class="product-price">
+      {% if variant %}{% include "partials/price.html" with amount=variant.price %}{% else %}{% include "partials/price.html" with amount=None %}{% endif %}
+      {% if shop_card and variant.purchasable and variant.stock <= 3 %}
+        {% load forma %}<span class="stock shop-low-stock">فقط {{ variant.stock|fa }} عدد موجود</span>
+      {% else %}{% include "partials/stock.html" with stock=variant.stock %}{% endif %}
+    </div>
+    {% if shop_card %}{% include "partials/shop/purchase.html" %}{% endif %}
+    {% if show_compare %}
+    <form method="post" action="{% url 'change-comparison' item.slug %}" class="compare-form">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}#card-{{ item.slug }}">
+      <button class="text-link{% if item.pk in request.session.compare %} compared{% endif %}" type="submit" aria-label="{% if item.pk in request.session.compare %}حذف از مقایسه{% else %}افزودن به مقایسه{% endif %}، {{ item.name }}">
+        {% if item.pk in request.session.compare %}{% include "partials/icon.html" with name="check" %} در فهرست مقایسه{% else %}{% include "partials/icon.html" with name="compare" %} افزودن به مقایسه{% endif %}
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</article>
+{% endwith %}

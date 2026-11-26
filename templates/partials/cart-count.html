@@ -1,0 +1,1 @@
+{% load forma %}<span id="cart-count" class="cart-count{% if not cart_count %} sr-only{% endif %}" aria-live="polite"{% if swap_count %} hx-swap-oob="true"{% endif %}><span{% if swap_count %} data-count-change{% endif %}>{{ cart_count|fa }}</span><span class="sr-only"> کالا</span></span>

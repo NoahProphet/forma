@@ -1,0 +1,4 @@
+<a href="{% url 'shop' %}"{% if request.resolver_match.url_name == 'shop' or request.resolver_match.url_name == 'product' %} aria-current="page"{% endif %}>فروشگاه</a>
+<a href="{% url 'brands' %}"{% if request.resolver_match.url_name == 'brands' %} aria-current="page"{% endif %}>برندها</a>
+<a href="{% url 'projects' %}"{% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project' %} aria-current="page"{% endif %}>پروژه‌ها</a>
+<a href="{% url 'contact' %}"{% if request.resolver_match.url_name == 'contact' %} aria-current="page"{% endif %}>تماس با ما</a>

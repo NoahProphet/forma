@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+{% block content %}
+<article class="wrap page-shell project-story">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><a href="{% url 'projects' %}">پروژه‌ها</a><span>/</span><span aria-current="page">{{ project.title }}</span></nav>
+  <header class="project-intro">
+    <h1>{{ project.title }}</h1>
+    <div><p>{{ project.summary }}</p>{% if project.is_demo %}<p class="note">نمونه‌چیدمان</p>{% endif %}</div>
+  </header>
+  {% if project.image %}<img class="project-cover" src="{{ project.image.url }}" alt="{{ project.title }}" fetchpriority="high">{% endif %}
+  <div class="project-context">
+    <div class="prose">{{ project.body|linebreaks }}</div>
+    {% if related %}
+    <section class="project-products" aria-labelledby="project-products-heading">
+      <h2 id="project-products-heading">{% if project.is_demo %}محصولات مرتبط با چیدمان{% else %}محصولات این چیدمان{% endif %}</h2>
+      <ul role="list">
+        {% for item in related %}
+        <li>
+          <a href="{{ item.get_absolute_url }}">
+            {% if item.image %}<img src="{{ item.image.url }}" alt="" loading="lazy" decoding="async">{% endif %}
+            <span>{{ item.name }}{% if item.model %}<small><bdi>{{ item.model }}</bdi></small>{% endif %}</span>
+            {% include "partials/icon.html" with name="arrow" %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+  {% if project.gallery.all %}
+  <section class="project-details" aria-labelledby="project-gallery-heading">
+    <div class="section-heading"><h2 id="project-gallery-heading">جزئیات چیدمان</h2></div>
+    <div class="installation-grid">
+      {% for entry in project.gallery.all %}<img class="project-gallery-image" src="{{ entry.image.url }}" alt="{{ entry.alt }}" loading="lazy" decoding="async">{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  <a class="text-link project-contact" href="{% url 'contact' %}#request">درخواست مشاوره {% include "partials/icon.html" with name="arrow" %}</a>
+</article>
+{% endblock %}

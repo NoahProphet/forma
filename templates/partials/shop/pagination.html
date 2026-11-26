@@ -1,0 +1,20 @@
+{% load forma %}
+{% if page_links %}
+<nav class="shop-pagination" aria-label="صفحه‌های محصولات">
+  {% if previous_url %}
+    {% include "partials/shop/page-link.html" with url=previous_url label="صفحه قبل" direction="previous" %}
+  {% else %}
+    <span class="shop-page-arrow" aria-hidden="true">{% include "partials/icon.html" with name="chevron" %}</span>
+  {% endif %}
+  {% for entry in page_links %}
+    {% if not entry %}<span aria-hidden="true">…</span>
+    {% elif entry.number == result.number %}<span class="shop-current-page" aria-current="page">{{ entry.number|fa }}</span>
+    {% else %}{% include "partials/shop/page-link.html" with url=entry.url number=entry.number %}{% endif %}
+  {% endfor %}
+  {% if next_url %}
+    {% include "partials/shop/page-link.html" with url=next_url label="صفحه بعد" direction="next" %}
+  {% else %}
+    <span class="shop-page-arrow is-next" aria-hidden="true">{% include "partials/icon.html" with name="chevron" %}</span>
+  {% endif %}
+</nav>
+{% endif %}

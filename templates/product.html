@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body_class %}product-page{% endblock %}
+{% block content %}
+<div class="wrap page-shell">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><a href="{% url 'shop' %}">فروشگاه</a><span>/</span><a href="{% url 'shop' %}?category={{ product.category.slug }}">{{ product.category.name }}</a></nav>
+  {% include "partials/product-choice.html" %}
+  {% if related %}
+  <section class="related-section">
+    <div class="section-heading"><h2>محصولات مرتبط</h2><span class="heading-line" aria-hidden="true"></span></div>
+    {% include "partials/sample-note.html" %}
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-6">{% for item in related %}{% include "partials/card.html" %}{% endfor %}</div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

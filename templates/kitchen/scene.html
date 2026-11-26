@@ -1,0 +1,26 @@
+<section class="wrap kitchen" id="home-03" aria-labelledby="kitchen-title">
+  <header class="k-heading"><h2 id="kitchen-title">{{ kitchen.title }}</h2>
+    {% if kitchen.demo %}<p>نسخه نمایشی با محصولات فرضی</p>{% endif %}
+  </header>
+  <div class="k-layout">
+    <div class="k-photograph">
+      <div class="k-viewport" tabindex="0" aria-label="نمای آشپزخانه؛ در حالت بزرگ‌نمایی با کلیدهای جهت حرکت کنید">
+        <div class="k-plane" dir="ltr"></div>
+        <noscript><img src="{{ kitchen.assetRoot }}A-small.webp" width="896" height="560" alt="آشپزخانه فرما با جزیره سنگی و کابینت گردویی"></noscript>
+      </div>
+      <div class="k-tools" hidden>
+        <div class="k-cameras" role="group" aria-label="زاویه دید">{% for key,view in kitchen.views.items %}<button type="button" data-camera="{{ key }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ view.name }}</button>{% endfor %}</div>
+        <div class="k-zoom" role="group" aria-label="بزرگ‌نمایی"><button type="button" data-minus aria-label="کوچک‌نمایی">−</button><output dir="ltr" aria-label="میزان بزرگ‌نمایی">۱×</output><button type="button" data-plus aria-label="بزرگ‌نمایی">+</button></div>
+      </div>
+    </div>
+    <aside class="k-picker" aria-label="انتخاب تجهیزات آشپزخانه">
+      <div class="k-categories" role="group" aria-label="انتخاب بخش آشپزخانه" hidden>{% for key,slot in kitchen.slots.items %}{% if slot.models %}<button type="button" data-category="{{ key }}">{{ slot.name }}</button>{% endif %}{% endfor %}</div>
+      <div class="k-options"></div>
+      <button type="button" class="k-reset" hidden>بازنشانی آشپزخانه</button>
+      <noscript><p>برای تغییر چیدمان، جاوااسکریپت را فعال کنید.</p>{% for slot in kitchen.slots.values %}{% for model in slot.models %}<a class="text-link" href="{{ model.variants.0.url }}">{{ model.name }}</a> {% endfor %}{% endfor %}</noscript>
+    </aside>
+  </div>
+  <p class="k-status" role="status" aria-live="polite"></p>
+  <button class="text-link k-retry" type="button" hidden>تلاش دوباره</button>
+  {{ kitchen|json_script:"kitchen-data" }}
+</section>

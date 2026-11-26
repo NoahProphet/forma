@@ -1,0 +1,6 @@
+{% load forma %}
+<a href="{{ url }}" hx-get="{{ url }}" hx-target="#catalog-panel" hx-swap="outerHTML"
+   hx-indicator="#catalog-loading" hx-sync="#catalog-panel:replace"
+   {% if label %}class="shop-page-arrow{% if direction == 'next' %} is-next{% endif %}" aria-label="{{ label }}"{% endif %}>
+  {% if label %}{% include "partials/icon.html" with name="chevron" %}{% else %}{{ number|fa }}{% endif %}
+</a>

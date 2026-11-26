@@ -1,0 +1,46 @@
+{% load forma %}
+{% if partial %}<title>{{ catalog_title }} | فرما</title>{% endif %}
+<div class="wrap page-shell catalog-page" id="catalog-panel">
+  <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span>{% if category %}<a href="{% url 'shop' %}">فروشگاه</a><span>/</span>{% endif %}<span aria-current="page">{{ catalog_title }}</span></nav>
+  <div class="page-heading catalog-heading">
+    <div><h1>{{ catalog_title }}</h1>{% if category.description %}<p>{{ category.description }}</p>{% endif %}</div>
+    <a class="text-link compare-link" href="{% url 'compare' %}">{% include "partials/icon.html" with name="compare" %} مقایسه{% if compare_count %} ({{ compare_count|fa }}){% endif %}</a>
+  </div>
+  {% include "partials/shop/scopes.html" with location="rail" %}
+  <div class="catalog-layout">
+    <aside class="filter-host" id="filter-host" aria-label="فیلترهای فروشگاه">{% include "partials/filters.html" %}</aside>
+    <div class="catalog-main">
+      <div class="catalog-tools">
+        <button type="button" id="open-filters" class="button mobile-filter" hidden aria-haspopup="dialog" aria-controls="filter-dialog">{% include "partials/icon.html" with name="filter" %} فیلترها{% if active_filters %} ({{ active_filters|length|fa }}){% endif %}</button>
+        <div id="results-count" class="results-count" role="status" tabindex="-1">{{ result.paginator.count|fa }} محصول{% if filters.q %} برای «{{ filters.q }}»{% endif %}</div>
+        <div class="sort-control">
+          <label for="catalog-sort">مرتب‌سازی</label>
+          <select id="catalog-sort" name="sort" form="filters-form">
+            {% for key, option in sort_options %}<option value="{{ key }}"{% if filters.sort == key %} selected{% endif %}>{{ option.0 }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      {% include "partials/filter-chips.html" %}
+      {% include "partials/sample-note.html" %}
+      <p id="catalog-loading" class="htmx-indicator loading-label" role="status">در حال به‌روزرسانی محصولات…</p>
+      {% if result.object_list %}
+      <div class="shop-grid">{% for item in result %}{% include "partials/card.html" with show_compare=True shop_card=True heading="h2" %}{% endfor %}</div>
+      {% else %}
+      <div class="empty-state">
+        <h2>محصولی پیدا نشد</h2>
+        <p>{% if category.slug == 'building' %}برای مشاوره درباره تجهیزات ساختمان با شوروم فرما هماهنگ کنید.{% else %}عبارت جست‌وجو یا فیلترها را تغییر دهید.{% endif %}</p>
+        {% if category.slug == 'building' %}<a class="button" href="{% url 'contact' %}?kind=consult#request">درخواست مشاوره</a>
+        {% else %}<a class="button button-outline" href="{% url 'shop' %}">مشاهده همه محصولات</a>{% endif %}
+      </div>
+      {% endif %}
+      {% include "partials/shop/pagination.html" %}
+    </div>
+  </div>
+  <dialog class="filter-dialog" id="filter-dialog" aria-labelledby="drawer-title">
+    <div class="drawer-heading"><h2 id="drawer-title">فیلترهای فروشگاه</h2><button class="icon-link" id="close-filters" type="button" aria-label="بستن فیلترها">{% include "partials/icon.html" with name="close" %}</button></div>
+    <p class="notice error" data-network-status role="alert" tabindex="-1" hidden></p>
+    {% if active_filters %}<div class="drawer-applied"><p>فیلترهای اعمال‌شده</p>{% include "partials/filter-chips.html" with chip_location="drawer" %}</div>{% endif %}
+    <div id="filter-drawer-content"></div>
+    <div class="drawer-footer"><button class="button" id="show-results" type="button">مشاهده {{ result.paginator.count|fa }} محصول</button></div>
+  </dialog>
+</div>

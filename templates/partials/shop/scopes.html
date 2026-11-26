@@ -1,0 +1,16 @@
+{% load forma %}
+<nav class="shop-scopes shop-scopes--{{ location }}{% if location == 'sidebar' %} shop-facet{% endif %}" aria-label="دسته‌های فروشگاه">
+  {% if location == 'sidebar' %}<p class="shop-facet-title">دسته‌بندی</p>{% endif %}
+  <ul role="list">
+    {% for option in scopes %}
+    <li>
+      <a id="category-{{ location }}-{{ option.slug|default:'all' }}"
+         href="{{ option.url }}" hx-get="{{ option.url }}" hx-target="#catalog-panel"
+         hx-swap="outerHTML" hx-indicator="#catalog-loading, #filters-loading" hx-sync="#catalog-panel:replace"
+         {% if filters.category == option.slug %}aria-current="page"{% endif %}>
+        <span>{{ option.name }}</span><span class="shop-facet-count">{{ option.count|fa }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>

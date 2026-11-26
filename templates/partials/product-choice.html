@@ -1,0 +1,78 @@
+{% load forma %}
+<div id="product-choice">
+  <div class="product-detail">
+    <div class="gallery">
+      <div class="gallery-main" id="active-photo">
+        {% if photo %}<img src="{{ photo.image.url }}" alt="{{ photo.alt }}"{% if gallery_changed %} data-gallery-change{% endif %}{% if photo.zoom %} class="photo-closeup"{% endif %} width="1000" height="825" fetchpriority="high">{% else %}<span class="media-empty">تصویر این گزینه در دسترس نیست</span>{% endif %}
+      </div>
+      {% if gallery|length > 1 %}
+      <div class="thumbnails" role="group" aria-label="تصاویر محصول">
+        {% for entry in gallery %}
+        <a id="photo-{{ entry.id }}" class="gallery-thumb" href="?{% if variant %}finish={{ variant.finish.slug }}&amp;{% endif %}photo={{ entry.id }}" hx-get="?{% if variant %}finish={{ variant.finish.slug }}&amp;{% endif %}photo={{ entry.id }}" hx-target="#product-choice" hx-swap="outerHTML" hx-replace-url="true" hx-indicator="#product-loading" hx-sync="#product-choice:replace" aria-label="{{ entry.alt }}"{% if entry.id == photo.id %} aria-current="true"{% endif %}><span><img src="{{ entry.image.url }}" class="{% if entry.zoom %}photo-closeup{% endif %}" alt="" width="100" height="83"></span></a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="purchase" id="purchase">
+      <h1>{{ product.name }}</h1>
+      <div class="product-caption purchase-caption">
+        {% if product.brand %}<a href="{% url 'shop' %}?brand={{ product.brand.slug }}"><bdi>{{ product.brand.name }}</bdi></a>{% endif %}
+        {% if product.model %}<span>مدل <bdi>{{ product.model }}</bdi></span>{% endif %}
+      </div>
+      {% if variant %}
+      <div class="finish-field">
+        <h2 id="finish-heading">رنگ و پرداخت <span>{{ variant.finish.name }}</span></h2>
+        {% if variants|length > 1 %}
+        <ul class="finish-list" aria-labelledby="finish-heading">
+          {% for option in variants %}
+          <li><a id="finish-{{ option.finish.slug }}" class="finish-swatch" href="?finish={{ option.finish.slug }}" hx-get="?finish={{ option.finish.slug }}" hx-target="#product-choice" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#product-loading" hx-sync="#product-choice:replace" title="{{ option.finish.name }}" aria-label="{{ option.finish.name }}"{% if option == variant %} aria-current="true"{% endif %}>
+            {% if option.finish.color %}<span class="finish-sample" style="--swatch:{{ option.finish.color }}" aria-hidden="true"></span>{% endif %}
+            <span class="swatch-text">{{ option.finish.name }}</span>
+          </a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="purchase-details">
+        <div class="product-price">
+          {% if variant %}{% include "partials/price.html" with amount=variant.price %}{% else %}{% include "partials/price.html" with amount=None %}{% endif %}
+          {% include "partials/stock.html" with stock=variant.stock %}
+        </div>
+        <div class="purchase-meta">
+          {% if variant %}<div class="sku-reference">
+            <span class="model-label">شناسه کالا <bdi dir="ltr" data-sku>{{ variant.sku }}</bdi></span>
+            <button class="copy-sku" type="button" aria-label="کپی شناسه کالا {{ variant.sku }}" title="کپی شناسه کالا">{% include "partials/icon.html" with name="copy" %}</button>
+            <span class="sku-feedback" role="status"></span>
+          </div>{% endif %}
+          {% if product.is_demo %}<span class="note">محصول نمونه فروشگاه</span>{% endif %}
+        </div>
+      </div>
+      {% if variant.purchasable %}
+      <form method="post" action="{% url 'cart-change' variant.pk %}" hx-post="{% url 'cart-change' variant.pk %}" hx-target="#add-status" hx-swap="outerHTML" hx-sync="body:drop" hx-indicator="#product-loading" hx-disabled-elt="find button">
+        {% csrf_token %}
+        <input type="hidden" name="operation" value="add">
+        <input type="hidden" name="quantity" value="1">
+        <button class="button purchase-button" type="submit">{% include "partials/icon.html" with name="bag" %} افزودن به سبد خرید</button>
+      </form>
+      {% else %}
+      <a class="button purchase-button" href="{% url 'contact' %}?kind=quote&amp;product={{ product.slug }}{% if variant %}&amp;finish={{ variant.finish.slug }}{% endif %}#request">درخواست قیمت و موجودی {% include "partials/icon.html" with name="arrow" %}</a>
+      {% endif %}
+      <a class="text-link" href="{% url 'contact' %}?kind=visit#request">هماهنگی بازدید از شوروم {% include "partials/icon.html" with name="arrow" %}</a>
+      <p id="product-loading" class="htmx-indicator loading-label" role="status">در حال به‌روزرسانی…</p>
+      {% include "partials/add-status.html" %}
+    </div>
+  </div>
+  <section class="spec-section" aria-labelledby="spec-heading">
+    <h2 id="spec-heading">مشخصات محصول</h2>
+    <div class="spec-grid">
+      <dl class="spec-list">
+        {% if product.brand %}<div><dt>برند</dt><dd><bdi>{{ product.brand.name }}</bdi></dd></div>{% endif %}
+        {% if product.material %}<div><dt>جنس</dt><dd>{{ product.material }}</dd></div>{% endif %}
+        {% if product.size %}<div><dt>ابعاد</dt><dd>{{ product.size|fa }}</dd></div>{% endif %}
+        {% if variant %}<div><dt>پرداخت</dt><dd>{{ variant.finish.name }}</dd></div>{% endif %}
+      </dl>
+      {% if product.description %}<div class="prose">{{ product.description|linebreaks }}</div>{% endif %}
+    </div>
+  </section>
+</div>
