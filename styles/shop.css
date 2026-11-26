@@ -132,7 +132,7 @@
 .catalog-page .shop-grid > :nth-child(2) { animation-delay: 60ms; }
 .catalog-page .shop-grid > :nth-child(3) { animation-delay: 120ms; }
 .catalog-page .shop-grid > :nth-child(n+4) { animation-delay: 165ms; }
-@keyframes shop-settle { from { opacity: .15; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shop-settle { from { transform: translateY(8px); } to { transform: translateY(0); } }
 .catalog-page .filter-dialog {
   inset: auto 0 0; margin: 0 auto; padding: 0 1rem; inline-size: 100%; max-inline-size: min(100%, 620px);
   block-size: auto; max-block-size: 86dvh; overscroll-behavior: contain; background: var(--ivory);

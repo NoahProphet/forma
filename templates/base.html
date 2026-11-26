@@ -29,7 +29,7 @@
   {% block page_scripts %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" hx-history="false">
-  <a class="skip-link" href="#main">رفتن به محتوا</a>
+  <a class="skip-link" href="#main" tabindex="0">رفتن به محتوا</a>
   {% include "partials/header.html" %}
   <main id="main" tabindex="-1">
     <div id="network-status" class="wrap network-status notice error" data-network-status role="alert" tabindex="-1" hidden></div>

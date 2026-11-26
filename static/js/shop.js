@@ -82,10 +82,9 @@ function preparePriceRange() {
 document.body.addEventListener("change", ({ target }) => {
   if (target.matches("#filters-form [data-shop-auto]")) target.form.requestSubmit();
 });
-document.body.addEventListener("submit", ({ target, submitter }) => {
+document.body.addEventListener("submit", ({ target }) => {
   if (target.id !== "filters-form") return;
   clearTimeout(priceTimers.get(target));
-  if (submitter?.id === "apply-filters") target.closest("#filter-dialog")?.close();
 });
 document.body.addEventListener("htmx:afterSwap", preparePriceRange);
 document.body.addEventListener("htmx:historyRestore", preparePriceRange);

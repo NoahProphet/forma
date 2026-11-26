@@ -267,7 +267,9 @@
     clearTimeout(resizeTimer);
     resizeTimer=setTimeout(() => {if (displayed) {centerOnSelection(); draw(false);}},150);
   });
-  if ("IntersectionObserver" in window) {
+  if (location.hash === "#" + root.id) {
+    start();
+  } else if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {observer.disconnect();start();}
     },{rootMargin:"96px"});

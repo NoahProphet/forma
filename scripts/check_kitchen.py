@@ -132,13 +132,16 @@ def failure_and_retry(browser,url):
 if __name__=="__main__":
     cli=argparse.ArgumentParser()
     cli.add_argument("--url",default="http://127.0.0.1:8011/")
+    cli.add_argument("--engine", choices=["chromium", "firefox", "webkit"], default="chromium")
     cli.add_argument("--output",type=Path)
     args=cli.parse_args()
     with sync_playwright() as runner:
-        browser=runner.chromium.launch()
+        browser=getattr(runner, args.engine).launch()
         functional(browser,args.url)
         failure_and_retry(browser,args.url)
         responsive(browser,args.url,args.output)
-        print(json.dumps(mobile_performance(browser,args.url),indent=2))
+        if args.engine == "chromium":
+            print(json.dumps(mobile_performance(browser,args.url),indent=2))
+        print(f"{args.engine}: configuration, camera changes, zoom, persistence, recovery and responsive checks passed.")
         browser.close()
 

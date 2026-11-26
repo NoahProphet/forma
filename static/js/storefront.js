@@ -113,6 +113,11 @@ document.body.addEventListener("htmx:beforeSwap", ({ detail }) => {
   if (!detail.shouldSwap) return;
   const active = document.activeElement;
   const dialog = detail.target?.id === "catalog-panel" && detail.target.querySelector("#filter-dialog[open]");
+  if (dialog && detail.requestConfig?.triggeringEvent?.submitter?.id === "apply-filters") {
+    // The replacement contains a closed sheet. Keep the current sheet available until a response succeeds.
+    focusBeforeSwap.set(detail.xhr, { id: "results-count", target: detail.target.id });
+    return;
+  }
   if (dialog && dialog.dataset.closing === undefined) {
     focusBeforeSwap.set(detail.xhr, {
       id: active.id,

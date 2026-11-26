@@ -16,7 +16,7 @@
     <div class="home-category-panels">
       {% for tile in home_categories %}
       <div class="home-category-panel" id="home-category-panel-{{ forloop.counter }}">
-        <a class="home-category-card{% if not tile.image %} home-category-card-plain{% endif %}" href="{{ tile.url }}" aria-labelledby="home-category-title-{{ forloop.counter }}">
+        <a class="home-category-card{% if not tile.image %} home-category-card-plain{% endif %}" href="{{ tile.url }}">
           {% if tile.image %}<img src="{{ tile.image.url }}" alt="" loading="lazy" decoding="async">{% endif %}
           <span class="home-category-copy">
             <strong id="home-category-title-{{ forloop.counter }}">{{ tile.label }}</strong>
