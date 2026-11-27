@@ -3,12 +3,18 @@
 {% block page_scripts %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}">{% endblock %}
 {% block content %}
 <article class="wrap k-detail">
-  <a class="text-link" href="{% url 'home' %}#home-03">بازگشت به آشپزخانه تعاملی</a>
+  <a class="text-link" href="{% url 'home' %}#home-03">بازگشت به آشپزخانه تعاملی {% include "partials/icon.html" with name="arrow" %}</a>
   <div><img src="{{ option.thumb }}" alt="{{ model.name }}، {{ option.name }}"><section>
+    <h1>{{ slot.name }} {{ model.name }}</h1>
     <p class="quiet">محصول فرضی آشپزخانه نمایشی فرما</p>
-    <h1>{{ slot.name }} {{ model.name }}</h1><p>{{ option.name }}</p>
-    <p>وضعیت نمایشی: {{ option.availability }}</p>
-    <nav aria-label="پرداخت‌های مدل">{% for variant in model.variants %}<a href="{{ variant.url }}"{% if variant.id == option.id %} aria-current="page"{% endif %}>{{ variant.name }}</a>{% endfor %}</nav>
+    <div class="finish-field">
+      <h2 id="preview-finishes">رنگ و پرداخت <span>{{ option.name }}</span></h2>
+      <nav class="finish-list" aria-labelledby="preview-finishes">{% for variant in model.variants %}
+        <a class="finish-swatch" href="{{ variant.url }}"{% if variant.id == option.id %} aria-current="page"{% endif %}>
+          <span class="finish-sample" aria-hidden="true" style="--swatch:{{ variant.color }}"></span><span class="swatch-text">{{ variant.name }}</span>
+        </a>{% endfor %}</nav>
+    </div>
+    <p class="quiet">موجودی نمایشی: {{ option.availability }}</p>
   </section></div>
 </article>
 {% endblock %}

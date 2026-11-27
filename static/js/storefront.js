@@ -1,6 +1,13 @@
 const mobileCatalog = window.matchMedia("(max-width: 1023px)");
 const focusBeforeSwap = new WeakMap();
 
+// Keep the focused product readable in the narrow, horizontally scrolling comparison.
+document.querySelector(".compare-grid")?.addEventListener("focusin", ({currentTarget, target}) => {
+  if (target !== currentTarget && currentTarget.scrollWidth > currentTarget.clientWidth) {
+    target.scrollIntoView({block: "nearest", inline: "center"});
+  }
+});
+
 if (navigator.clipboard?.writeText) {
   document.documentElement.classList.add("clipboard-ready");
   document.addEventListener("click", async (event) => {

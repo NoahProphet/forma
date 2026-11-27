@@ -1,24 +1,25 @@
 {% extends "base.html" %}
+{% load forma %}
 {% block content %}
 <div class="wrap page-shell">
   <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'shop' %}">فروشگاه</a><span>/</span><span aria-current="page">مقایسه</span></nav>
   <div class="page-heading"><div><h1>مقایسه محصولات</h1><p>تا سه محصول را از فروشگاه به مقایسه اضافه کنید.</p></div><a class="button button-outline" href="{% url 'shop' %}">مشاهده فروشگاه {% include "partials/icon.html" with name="arrow" %}</a></div>
   {% if compared %}
-  <div class="compare-grid">
+  <div class="compare-grid" role="region" aria-label="مشخصات محصولات انتخاب‌شده"{% if compared|length > 2 %} tabindex="0"{% endif %}>
     {% for item in compared %}
     <section class="comparison-product">
       {% with primary=item.card_variants.0 %}
       <a href="{{ item.get_absolute_url }}" class="comparison-photo media-frame" tabindex="-1" aria-hidden="true">
         {% if item.image %}<img src="{{ item.image.url }}" alt="" loading="lazy">{% else %}<span class="media-empty">تصویر در دسترس نیست</span>{% endif %}
       </a>
-      <h2><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h2>
-      {% if item.is_demo %}<p class="quiet">نمونه توسعه</p>{% endif %}
+      <header><h2><a href="{{ item.get_absolute_url }}" tabindex="0">{{ item.name }}</a></h2>
+      {% if item.is_demo %}<p class="quiet">محصول نمونه فروشگاه</p>{% endif %}</header>
       <dl class="spec-list">
         <div><dt>مدل</dt><dd><bdi>{{ item.model|default:"—" }}</bdi></dd></div>
         <div><dt>برند</dt><dd><bdi>{{ item.brand|default:"—" }}</bdi></dd></div>
         <div><dt>جنس</dt><dd>{{ item.material|default:"—" }}</dd></div>
-        <div><dt>ابعاد</dt><dd>{{ item.size|default:"—" }}</dd></div>
-        <div><dt>پرداخت‌ها</dt><dd>{% for option in item.card_variants %}{{ option.finish.name }}{% if not forloop.last %}، {% endif %}{% empty %}—{% endfor %}</dd></div>
+        <div><dt>ابعاد</dt><dd>{{ item.size|default:"—"|fa }}</dd></div>
+        <div><dt>رنگ و پرداخت</dt><dd>{% for option in item.card_variants %}{{ option.finish.name }}{% if not forloop.last %}، {% endif %}{% empty %}—{% endfor %}</dd></div>
         <div><dt>قیمت گزینه پیش‌فرض</dt><dd>{% if primary %}{% include "partials/price.html" with amount=primary.price %}{% else %}{% include "partials/price.html" with amount=None %}{% endif %}</dd></div>
       </dl>
       {% endwith %}

@@ -529,11 +529,18 @@ textarea { min-block-size: 7rem; resize: vertical; }
 .spec-list dt { color: var(--muted); }
 .spec-list dd { font-weight: 590; overflow-wrap: anywhere; }
 
-.compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1.5rem; }
-.comparison-product { border-block-end: 1px solid var(--line); }
+.compare-grid {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); column-gap: 1.5rem;
+  overflow-x: auto; padding: .3rem; margin: -.3rem; scrollbar-color: var(--line) var(--paper);
+}
+.compare-grid:has(.comparison-product:only-child) { max-inline-size: 28rem; }
+.comparison-product {
+  display: grid; grid-template-rows: subgrid; grid-row: 1 / span 9;
+  border-block-end: 1px solid var(--line);
+}
 .comparison-product h2 { font-size: 1.2rem; margin-block: 1rem .25rem; }
 .comparison-photo { aspect-ratio: 1.6; }
-.comparison-product .spec-list { margin-block-start: .65rem; }
+.comparison-product .spec-list { display: grid; grid-template-rows: subgrid; grid-row: span 6; margin-block-start: .65rem; }
 .basket-layout, .checkout-layout { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(240px, 1fr); gap: clamp(1rem, 4.8vw, 4rem); align-items: start; }
 .checkout-layout { grid-template-columns: minmax(230px, .85fr) minmax(0, 1.3fr); max-inline-size: 68rem; }
 .basket-row {
@@ -735,9 +742,8 @@ textarea { min-block-size: 7rem; resize: vertical; }
   .basket-edit { grid-column: 2; justify-self: stretch; display: flex; align-items: end; justify-content: space-between; gap: .3rem; flex-wrap: wrap; }
   .basket-edit .text-link { font-size: var(--text-small); }
   .basket-line-total { grid-column: 1 / -1; }
-  .compare-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+  .compare-grid { grid-auto-columns: minmax(min(44%, 10.25rem), 1fr); column-gap: .7rem; }
   .compare-grid .spec-list > div { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: .4rem; font-size: var(--text-meta); }
-  .compare-grid .spec-list > div:nth-child(5) { min-block-size: 6.4rem; }
 }
 @media (max-width: 360px) {
   .catalog-tools { align-items: end; }
