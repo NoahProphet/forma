@@ -4,8 +4,8 @@
 <div class="wrap page-shell">
   <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><span aria-current="page">تماس با ما</span></nav>
   <div class="page-heading"><h1>تماس با فرما</h1></div>
-  <section class="editorial-split contact-split" id="showroom">
-    <div>
+  <div class="contact-layout">
+    <section class="contact-split" id="showroom">
       <h2>شوروم فرما در رشت</h2>
       <address>{% include "partials/icon.html" with name="pin" %} <span>{{ showroom_address }}</span></address>
       <p>برای اطلاع از ساعت کاری و هماهنگی بازدید، با شوروم تماس بگیرید.</p>
@@ -16,17 +16,17 @@
         {% if showroom_whatsapp %}<a class="text-link" href="{{ showroom_whatsapp }}">پیام در واتس‌اپ {% include "partials/icon.html" with name="arrow" %}</a>{% endif %}
         {% if showroom_instagram %}<a class="text-link" href="{{ showroom_instagram }}">اینستاگرام فرما {% include "partials/icon.html" with name="arrow" %}</a>{% endif %}
       </div>
-    </div>
-    <img src="{% static 'media/hood.jpg' %}" width="1000" height="667" alt="نمونه چیدمان آشپزخانه با هود دیواری">
-  </section>
-  <section class="request-section" id="request">
-    <h2>درخواست از شوروم</h2>
-    <nav class="category-nav inquiry-kinds" aria-label="نوع درخواست">
-      {% for option in kinds %}<a href="{% url 'contact' %}?kind={{ option.value }}{% if option.value == 'quote' and selected_product %}&amp;product={{ selected_product.slug }}{% if variant %}&amp;finish={{ variant.finish.slug }}{% endif %}{% endif %}#request"{% if kind == option.value %} class="selected" aria-current="page"{% endif %}>{{ option.label }}</a>{% endfor %}
-    </nav>
-    {% if selected_product %}<p class="notice">{{ selected_product.name }}{% if variant %} · {{ variant.finish.name }} · <bdi>{{ variant.sku }}</bdi>{% endif %}{% if selected_product.is_demo %} · نمونه توسعه{% endif %}</p>{% endif %}
-    {% if kind == 'visit' %}<p>زمان پیشنهادی را وارد کنید. برای تأیید زمان بازدید با شوروم هماهنگ کنید.</p>{% endif %}
-    {% include "partials/inquiry-form.html" %}
-  </section>
+    </section>
+    <section class="request-section" id="request">
+      <h2>درخواست از شوروم</h2>
+      <nav class="category-nav inquiry-kinds" aria-label="نوع درخواست">
+        {% for option in kinds %}<a href="{% url 'contact' %}?kind={{ option.value }}{% if option.value == 'quote' and selected_product %}&amp;product={{ selected_product.slug }}{% if variant %}&amp;finish={{ variant.finish.slug }}{% endif %}{% endif %}#request"{% if kind == option.value %} class="selected" aria-current="page"{% endif %}>{{ option.label }}</a>{% endfor %}
+      </nav>
+      {% if selected_product %}<p class="notice">{{ selected_product.name }}{% if variant %} · {{ variant.finish.name }} · <bdi>{{ variant.sku }}</bdi>{% endif %}{% if selected_product.is_demo %} · نمونه توسعه{% endif %}</p>{% endif %}
+      {% if kind == 'visit' %}<p>زمان پیشنهادی را وارد کنید. برای تأیید زمان بازدید با شوروم هماهنگ کنید.</p>{% endif %}
+      {% include "partials/inquiry-form.html" %}
+    </section>
+    <img class="contact-photo" loading="lazy" src="{% static 'media/hood.jpg' %}" width="1000" height="667" alt="نمونه چیدمان آشپزخانه با هود دیواری">
+  </div>
 </div>
 {% endblock %}
