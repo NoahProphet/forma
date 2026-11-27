@@ -12,6 +12,7 @@
         <div class="k-cameras" role="group" aria-label="زاویه دید">{% for key,view in kitchen.views.items %}<button type="button" data-camera="{{ key }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ view.name }}</button>{% endfor %}</div>
         <div class="k-zoom" role="group" aria-label="بزرگ‌نمایی"><button type="button" data-minus aria-label="کوچک‌نمایی">−</button><output dir="ltr" aria-label="میزان بزرگ‌نمایی">۱×</output><button type="button" data-plus aria-label="بزرگ‌نمایی">+</button></div>
       </div>
+      <p class="k-touch-hint" hidden>برای نمایش یا پنهان کردن نقاط انتخاب، روی فضای خالی تصویر بزنید.</p>
     </div>
     <aside class="k-picker" aria-label="انتخاب تجهیزات آشپزخانه">
       <div class="k-categories" role="group" aria-label="انتخاب بخش آشپزخانه" hidden>{% for key,slot in kitchen.slots.items %}{% if slot.models %}<button type="button" data-category="{{ key }}">{{ slot.name }}</button>{% endif %}{% endfor %}</div>

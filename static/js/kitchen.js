@@ -184,6 +184,7 @@
       if (cameraChanged || reset) centerOnSelection();
       else applyTransform();
       find(".k-tools").hidden = false;
+      find(".k-touch-hint").hidden = false;
       find(".k-categories").hidden = false;
       find(".k-reset").hidden = false;
       paintOptions();
@@ -205,6 +206,27 @@
   function start() {
     if (!started) {started = true; draw(false);}
   }
+  // Track the actual pointer so a touchscreen laptop can switch between touch and mouse.
+  let touchInput = false;
+  function showOnHover(event) {
+    if (event.pointerType === "mouse" && viewport.dataset.hotspots !== "hover") {
+      viewport.dataset.hotspots = "hover";
+    }
+  }
+  viewport.addEventListener("pointerenter", showOnHover);
+  viewport.addEventListener("pointermove", showOnHover);
+  viewport.addEventListener("pointerleave", (event) => {
+    if (event.pointerType === "mouse") delete viewport.dataset.hotspots;
+  });
+  document.addEventListener("pointerdown", (event) => {
+    touchInput = event.pointerType === "touch" || event.pointerType === "pen";
+    if (!viewport.contains(event.target)) delete viewport.dataset.hotspots;
+  });
+  viewport.addEventListener("click", (event) => {
+    if (!touchInput || !event.detail || suppressClick || event.target.closest(".k-hit")) return;
+    if (viewport.dataset.hotspots === "tap") delete viewport.dataset.hotspots;
+    else viewport.dataset.hotspots = "tap";
+  });
   root.addEventListener("click", event => {
     const b = event.target.closest("button");
     if (!b || suppressClick) return;

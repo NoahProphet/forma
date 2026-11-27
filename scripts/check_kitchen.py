@@ -33,6 +33,7 @@ def functional(browser, url):
     for camera in config["views"]:
         click(page,f'[data-camera="{camera}"]')
         for slot_key,slot in config["slots"].items():
+            page.locator(".k-viewport").hover(position={"x": 8, "y": 8})
             click(page,f'[data-slot="{slot_key}"]')
             expect(page.locator(f'[data-category="{slot_key}"]')).to_have_attribute("aria-pressed","true")
             for model in slot["models"]:
@@ -63,6 +64,50 @@ def functional(browser, url):
     expect(page.locator('[data-camera="A"]')).to_have_attribute("aria-pressed","true")
     assert page.evaluate("sessionStorage.getItem('forma.kitchen.'+JSON.parse(document.querySelector('#kitchen-data').textContent).id)") is None
     assert not errors,errors
+    page.close()
+
+
+def hotspot_visibility(browser, url):
+    page = browser.new_page(viewport={"width": 1440, "height": 960})
+    page.goto(url + "#home-03")
+    ready(page)
+    viewport = page.locator(".k-viewport")
+    hit = viewport.locator(".k-hit").first
+    page.locator("#kitchen-title").hover()
+    expect(hit).to_have_css("opacity", "0")
+    expect(hit).to_have_css("pointer-events", "none")
+    viewport.hover(position={"x": 8, "y": 8})
+    expect(hit).to_have_css("opacity", "1")
+    hit.hover()
+    expect(hit).to_have_css("pointer-events", "auto")
+    page.locator("#kitchen-title").hover()
+    expect(hit).to_have_css("pointer-events", "none")
+    expect(hit).to_have_css("opacity", "0")
+    viewport.focus()
+    page.keyboard.press("Tab")
+    expect(hit).to_be_focused()
+    expect(hit).to_have_css("opacity", "1")
+    page.keyboard.press("Enter")
+    expect(page.locator(".k-model[aria-pressed=true]")).to_be_focused()
+    expect(hit).to_have_css("opacity", "0")
+    page.close()
+
+    page = browser.new_page(viewport={"width": 390, "height": 844}, has_touch=True, reduced_motion="reduce")
+    page.goto(url + "#home-03")
+    ready(page)
+    viewport = page.locator(".k-viewport")
+    hood = viewport.locator('[data-slot="hood"]')
+    expect(hood).to_have_css("pointer-events", "none")
+    viewport.tap(position={"x": 8, "y": 8})
+    expect(hood).to_have_css("opacity", "1")
+    hood.tap()
+    expect(page.locator('[data-category="hood"]')).to_have_attribute("aria-pressed", "true")
+    viewport.tap(position={"x": 8, "y": 8})
+    expect(hood).to_have_css("pointer-events", "none")
+    viewport.tap(position={"x": 8, "y": 8})
+    page.locator('[data-category="sink"]').tap()
+    expect(hood).to_have_css("opacity", "0")
+    expect(page.locator('[data-category="sink"]')).to_have_attribute("aria-pressed", "true")
     page.close()
 
 
@@ -137,6 +182,7 @@ if __name__=="__main__":
     args=cli.parse_args()
     with sync_playwright() as runner:
         browser=getattr(runner, args.engine).launch()
+        hotspot_visibility(browser,args.url)
         functional(browser,args.url)
         failure_and_retry(browser,args.url)
         responsive(browser,args.url,args.output)

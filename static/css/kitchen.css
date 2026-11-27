@@ -13,6 +13,21 @@
 .k-viewport[data-dragging]{cursor:grabbing}
 .k-hit{position:absolute;background:transparent;cursor:pointer;touch-action:inherit;border:0;overflow:visible}
 .k-hit:focus-visible{outline:2px solid white;outline-offset:2px}
+.k-hit-layer { pointer-events: none; }
+.k-hit {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms var(--ease);
+}
+.k-viewport[data-hotspots] .k-hit,
+.k-hit:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.k-touch-hint { display: none; }
+@media (any-pointer: coarse) {
+  .k-touch-hint { display: block; margin-block-start: .4rem; color: var(--muted); font-size: var(--text-small); }
+}
 .k-pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--pin-scale,1));border-radius:50%;width:26px;height:26px;display:grid;place-items:center;border:1px solid #fff9;background:#26211dcf;color:white;font:18px/1 sans-serif;box-shadow:0 1px 5px #241c1366;transition:background .16s,border-color .16s}
 .k-pin::before{content:"+"}.k-hit[aria-pressed=true] .k-pin{background:var(--ivory);color:var(--ink);border-color:#594630}
 .k-hit[aria-pressed=true] .k-pin::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--focus)}
