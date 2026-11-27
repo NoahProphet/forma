@@ -23,6 +23,16 @@ def scene(page):
     return page.locator("#kitchen-data").evaluate("el => JSON.parse(el.textContent)")
 
 
+def markers_hidden(page):
+    page.wait_for_function("""() => {
+      const hits = [...document.querySelectorAll('.k-hit')];
+      return hits.length > 0 && hits.every(hit => {
+        const style = getComputedStyle(hit);
+        return style.opacity === '0' && style.pointerEvents === 'none';
+      });
+    }""")
+
+
 def functional(browser, url):
     page = browser.new_page(viewport={"width":1440,"height":960})
     errors = []
@@ -38,8 +48,10 @@ def functional(browser, url):
             expect(page.locator(f'[data-category="{slot_key}"]')).to_have_attribute("aria-pressed","true")
             for model in slot["models"]:
                 click(page,f'[data-model="{model["id"]}"]')
+                markers_hidden(page)
                 for variant in model["variants"]:
                     click(page,f'[data-finish="{variant["id"]}"]')
+                    markers_hidden(page)
                     expect(page.locator(".k-selection a")).to_have_attribute("href",variant["url"])
                     expect(page.locator(".k-stock")).to_contain_text(variant["availability"])
                     stored=page.evaluate("key=>JSON.parse(sessionStorage.getItem(key))","forma.kitchen."+config["id"])
@@ -80,6 +92,11 @@ def hotspot_visibility(browser, url):
     expect(hit).to_have_css("opacity", "1")
     hit.hover()
     expect(hit).to_have_css("pointer-events", "auto")
+    # A keyboard user can enter the panel while the mouse is still over the photo.
+    page.locator(".k-model").last.focus()
+    page.keyboard.press("Enter")
+    ready(page)
+    markers_hidden(page)
     page.locator("#kitchen-title").hover()
     expect(hit).to_have_css("pointer-events", "none")
     expect(hit).to_have_css("opacity", "0")
@@ -108,6 +125,22 @@ def hotspot_visibility(browser, url):
     page.locator('[data-category="sink"]').tap()
     expect(hood).to_have_css("opacity", "0")
     expect(page.locator('[data-category="sink"]')).to_have_attribute("aria-pressed", "true")
+    for camera in scene(page)["views"]:
+        page.locator(f'[data-camera="{camera}"]').tap()
+        ready(page)
+        for category, slot in scene(page)["slots"].items():
+            page.locator(f'[data-category="{category}"]').tap()
+            for model in slot["models"]:
+                viewport.tap(position={"x": 8, "y": 8})
+                page.locator(f'[data-model="{model["id"]}"]').tap()
+                ready(page)
+                markers_hidden(page)
+                for finish in model["variants"]:
+                    viewport.tap(position={"x": 8, "y": 8})
+                    expect(hood).to_have_css("opacity", "1")
+                    page.locator(f'[data-finish="{finish["id"]}"]').tap()
+                    ready(page)
+                    markers_hidden(page)
     page.close()
 
 
@@ -126,7 +159,7 @@ def mobile_performance(browser,url):
     ready(page)
     page.wait_for_function("Array.from(document.querySelectorAll('.k-model img')).every(i=>i.complete && i.naturalWidth)")
     stats=page.evaluate("""() => ({readyMs:Math.round(performance.now()-performance.getEntriesByName('approach')[0].startTime),
-       initialAssetBytes:performance.getEntriesByType('resource').filter(r=>r.name.includes('/kitchens/') || r.name.endsWith('/kitchen.js') || r.name.endsWith('/kitchen.css')).reduce((n,r)=>n+r.transferSize,0)})""")
+       initialAssetBytes:performance.getEntriesByType('resource').filter(r=>r.name.includes('/kitchens/') || ['kitchen.js','kitchen.css'].includes(new URL(r.name).pathname.split('/').pop())).reduce((n,r)=>n+r.transferSize,0)})""")
     click(page,'[data-finish="graphite"]')
     durations=[]
     for value in ("champagne","graphite")*4:

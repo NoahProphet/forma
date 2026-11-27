@@ -3,7 +3,7 @@
 {% block page_type %}place{% endblock %}
 {% block taste_meta %}<meta name="page-type" content="place"><meta name="page-kind" content="place">{% endblock %}
 {% block body_class %}home-page{% endblock %}
-{% block page_scripts %}{% if kitchen %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}"><script defer src="{% static 'js/kitchen.js' %}"></script>{% endif %}{% endblock %}
+{% block page_scripts %}{% if kitchen %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=2"><script defer src="{% static 'js/kitchen.js' %}?v=2"></script>{% endif %}{% endblock %}
 {% block content %}
 <section class="hero" aria-labelledby="hero-heading" data-enter>
   <picture class="hero-media">

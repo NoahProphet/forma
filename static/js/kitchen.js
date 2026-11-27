@@ -208,6 +208,9 @@
   }
   // Track the actual pointer so a touchscreen laptop can switch between touch and mouse.
   let touchInput = false;
+  function hideHotspots() {
+    delete viewport.dataset.hotspots;
+  }
   function showOnHover(event) {
     if (event.pointerType === "mouse" && viewport.dataset.hotspots !== "hover") {
       viewport.dataset.hotspots = "hover";
@@ -216,20 +219,31 @@
   viewport.addEventListener("pointerenter", showOnHover);
   viewport.addEventListener("pointermove", showOnHover);
   viewport.addEventListener("pointerleave", (event) => {
-    if (event.pointerType === "mouse") delete viewport.dataset.hotspots;
+    if (event.pointerType === "mouse" && viewport.dataset.hotspots === "hover") hideHotspots();
   });
+  viewport.addEventListener("focusin", ({target}) => {
+    if (target.matches(".k-hit:focus-visible")) viewport.dataset.hotspots = "keyboard";
+  });
+  viewport.addEventListener("focusout", ({relatedTarget}) => {
+    if (viewport.dataset.hotspots === "keyboard" && !viewport.contains(relatedTarget)) hideHotspots();
+  });
+  root.addEventListener("focusin", ({target}) => {
+    if (!viewport.contains(target)) hideHotspots();
+  });
+  window.addEventListener("blur", hideHotspots);
   document.addEventListener("pointerdown", (event) => {
     touchInput = event.pointerType === "touch" || event.pointerType === "pen";
-    if (!viewport.contains(event.target)) delete viewport.dataset.hotspots;
+    if (!viewport.contains(event.target)) hideHotspots();
   });
   viewport.addEventListener("click", (event) => {
     if (!touchInput || !event.detail || suppressClick || event.target.closest(".k-hit")) return;
-    if (viewport.dataset.hotspots === "tap") delete viewport.dataset.hotspots;
+    if (viewport.dataset.hotspots === "tap") hideHotspots();
     else viewport.dataset.hotspots = "tap";
   });
   root.addEventListener("click", event => {
     const b = event.target.closest("button");
     if (!b || suppressClick) return;
+    if (!viewport.contains(b)) hideHotspots();
     if (b===retry) {draw(); return;}
     const key = b.dataset.category || b.dataset.slot;
     if (key) {

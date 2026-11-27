@@ -17,10 +17,11 @@
 .k-hit {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms var(--ease);
+  transition: opacity 220ms var(--ease);
 }
-.k-viewport[data-hotspots] .k-hit,
-.k-hit:focus-visible {
+.k-viewport[data-hotspots="hover"]:hover .k-hit,
+.k-viewport[data-hotspots="tap"] .k-hit,
+.k-viewport[data-hotspots="keyboard"] .k-hit:focus-visible {
   opacity: 1;
   pointer-events: auto;
 }
