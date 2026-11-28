@@ -32,9 +32,37 @@
   align-items: start;
   gap: .75rem;
   padding-block-start: 1rem;
+  font-size: clamp(1.1rem, 1.65vw, 1.45rem);
+  line-height: 1.5;
 }
-.home-project-title h3 { font-size: clamp(1.1rem, 1.65vw, 1.45rem); line-height: 1.5; }
-.home-project-summary { padding-block: .25rem 1rem; color: var(--muted); font-size: var(--text-meta); }
+.home-project-title h3 { font-size: inherit; line-height: inherit; }
+.home-project-title .icon {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  margin-block-start: calc((1.5em - 1.1rem) / 2);
+  color: var(--muted);
+}
+.home-project-summary {
+  max-inline-size: 62ch;
+  padding-block: .35rem 1rem;
+  color: var(--muted);
+  font-size: var(--text-ui);
+  line-height: 1.75;
+}
+.home-project-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+@media (hover: hover) {
+  .home-project-card:hover { border-color: var(--focus); }
+  .home-project-card:hover .icon { color: var(--focus); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home-project-image img { transition: transform 280ms var(--ease); }
+  .home-project-title .icon { transform: translateX(.2rem); transition: transform 180ms var(--ease); }
+  .home-project-card:focus-visible .icon { transform: none; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home-project-card:hover img { transform: scale(1.015); }
+  .home-project-card:hover .icon { transform: none; }
+}
 @media (max-width: 42rem) {
   .home-projects-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
   .home-project-card { grid-row: auto; grid-template-rows: auto auto auto; gap: 0; }
