@@ -23,7 +23,7 @@
   <meta name="theme-color" content="#fffcf6">
   <meta name="htmx-config" content='{"historyRestoreAsHxRequest":false,"allowEval":false,"selfRequestsOnly":true,"includeIndicatorStyles":false,"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"422","swap":true},{"code":"[45]..","swap":false,"error":true}]}'>
   <link rel="icon" href="{% static 'media/icon.png' %}" type="image/png">
-  <link rel="stylesheet" href="{% static 'css/storefront.css' %}">
+  <link rel="stylesheet" href="{% storefront_css_url %}">
   <script defer src="{% static 'js/htmx.min.js' %}"></script>
   <script defer src="{% static 'js/storefront.js' %}"></script>
   {% block page_scripts %}{% endblock %}

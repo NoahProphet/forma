@@ -1,3 +1,7 @@
+import re
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
@@ -6,6 +10,21 @@ from .models import Project, ProjectImage
 
 @override_settings(DEBUG=True, KITCHEN_MODE="off")
 class ProjectCardTests(TestCase):
+    def test_rebuilding_stylesheet_changes_its_url_on_both_pages(self):
+        def stylesheet(page):
+            html = self.client.get(reverse(page)).content.decode()
+            return re.search(r'href="([^"]+/storefront\.css\?v=[a-f0-9]+)"', html)[1]
+
+        with TemporaryDirectory() as directory, self.settings(BASE_DIR=Path(directory)):
+            css = Path(directory) / "static/css/storefront.css"
+            css.parent.mkdir(parents=True)
+            css.write_bytes(b".project-grid{}")
+            before = stylesheet("projects")
+            css.write_bytes(b".project-grid{display:grid}")
+            after = stylesheet("projects")
+            self.assertNotEqual(before, after)
+            self.assertEqual(after, stylesheet("home"))
+
     def test_both_pages_use_the_same_cards_and_covers(self):
         kitchen = Project.objects.create(
             title="آشپزخانه", slug="kitchen", summary="سنگ و چوب", image="demo/hero.jpg", is_demo=True,
