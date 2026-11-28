@@ -4,7 +4,6 @@
 {% block taste_meta %}<meta name="page-type" content="place"><meta name="page-kind" content="place">{% endblock %}
 {% block body_class %}home-page{% endblock %}
 {% block page_scripts %}
-  {% if projects %}<link rel="stylesheet" href="{% static 'css/home-projects.css' %}">{% endif %}
   {% if kitchen %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=2"><script defer src="{% static 'js/kitchen.js' %}?v=2"></script>{% endif %}
 {% endblock %}
 {% block content %}
@@ -57,7 +56,7 @@
       <h2 id="projects-heading">پروژه‌ها و چیدمان‌ها</h2>
       <a class="text-link" href="{% url 'projects' %}">همه پروژه‌ها {% include "partials/icon.html" with name="arrow" %}</a>
     </header>
-    <div class="home-projects-grid">{% for item in projects %}{% include "partials/home-project-card.html" with item=item only %}{% endfor %}</div>
+    {% include "partials/project-grid.html" with projects=projects heading="h3" only %}
   </div>
 </section>
 {% endif %}

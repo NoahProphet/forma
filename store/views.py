@@ -19,7 +19,7 @@ from django.views.decorators.http import require_http_methods, require_POST
 from django.views.decorators.vary import vary_on_headers
 
 from .cart import BasketError, basket_key, basket_snapshot, basket_summary, change_basket
-from .catalog import products, projects, with_cards
+from .catalog import products, project_cards, projects, with_cards
 from .kitchen import kitchen_scene
 from .forms import InquiryForm, QuantityForm, normalize_number
 from .models import Article, Brand, Category, Finish, Inquiry, Variant
@@ -126,19 +126,13 @@ def home_category_tiles(items, categories):
 def home(request):
     items = products()
     categories = list(Category.objects.annotate(has_products=Exists(items.filter(category_id=OuterRef("pk")))))
-    home_projects = list(projects().prefetch_related("gallery")[:2])
-    for project in home_projects:
-        if project.is_demo and project.image.name == "demo/hero.jpg":
-            detail = list(project.gallery.all())
-            if detail:
-                project.card_image = detail[-1].image
     return page(
         request, "home.html", "تجهیزات آشپزخانه، حمام و ساختمان در رشت",
         "فروشگاه و شوروم فرما در رشت. محصولات آشپزخانه، حمام و ساختمان را ببینید، مقایسه کنید و برای بازدید یا استعلام هماهنگ کنید.",
         home_categories=home_category_tiles(items, categories), kitchen=kitchen_scene(),
         building_consult=any(category.slug == "building" and not category.has_products for category in categories),
         featured=with_cards(items.filter(featured=True).order_by("pk")).first(),
-        projects=home_projects,
+        projects=project_cards(projects()[:2]),
     )
 
 
@@ -409,7 +403,7 @@ def brands(request):
 
 def project_index(request):
     return page(request, "projects.html", "پروژه‌ها", "فضاها و ترکیب‌هایی برای انتخاب تجهیزات و متریال پروژه خود.",
-                projects=projects())
+                projects=project_cards(projects()))
 
 
 def project(request, slug):

@@ -26,7 +26,7 @@ def main():
                      projects="/projects/", journal="/journal/", about="/about/", faq="/faq/",
                      contact="/contact/", login="/login/", register="/register/", cart="/cart/",
                      checkout="/checkout/", compare="/compare/", empty="/shop/?q=forma-no-results")
-        for listing, name, selector in [("projects", "project", ".project-card a"),
+        for listing, name, selector in [("projects", "project", "a.project-card"),
                                         ("journal", "article", ".journal-card h2 a")]:
             page.goto(args.url + paths[listing])
             paths[name] = page.locator(selector).first.get_attribute("href")
