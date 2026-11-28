@@ -3,7 +3,10 @@
 {% block page_type %}place{% endblock %}
 {% block taste_meta %}<meta name="page-type" content="place"><meta name="page-kind" content="place">{% endblock %}
 {% block body_class %}home-page{% endblock %}
-{% block page_scripts %}{% if kitchen %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=2"><script defer src="{% static 'js/kitchen.js' %}?v=2"></script>{% endif %}{% endblock %}
+{% block page_scripts %}
+  {% if projects %}<link rel="stylesheet" href="{% static 'css/home-projects.css' %}">{% endif %}
+  {% if kitchen %}<link rel="stylesheet" href="{% static 'css/kitchen.css' %}?v=2"><script defer src="{% static 'js/kitchen.js' %}?v=2"></script>{% endif %}
+{% endblock %}
 {% block content %}
 <section class="hero" aria-labelledby="hero-heading" data-enter>
   <picture class="hero-media">
@@ -48,13 +51,13 @@
 {% endif %}
 
 {% if projects %}
-<section class="home-projects" aria-labelledby="projects-heading">
+<section class="home-projects" id="home-04" aria-labelledby="projects-heading">
   <div class="wrap home-section">
-    <div class="section-heading">
+    <header class="home-projects-heading">
       <h2 id="projects-heading">پروژه‌ها و چیدمان‌ها</h2>
       <a class="text-link" href="{% url 'projects' %}">همه پروژه‌ها {% include "partials/icon.html" with name="arrow" %}</a>
-    </div>
-    <div class="project-grid">{% for item in projects %}{% include "partials/project-card.html" %}{% endfor %}</div>
+    </header>
+    <div class="home-projects-grid">{% for item in projects %}{% include "partials/home-project-card.html" with item=item only %}{% endfor %}</div>
   </div>
 </section>
 {% endif %}

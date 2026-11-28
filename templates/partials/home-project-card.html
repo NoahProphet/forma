@@ -1,0 +1,12 @@
+<a class="home-project-card" href="{{ item.get_absolute_url }}">
+  <div class="home-project-image">
+    {% with cover=item.card_image|default:item.image %}
+    {% if cover %}<img src="{{ cover.url }}" width="1000" height="667" alt="" loading="lazy" decoding="async">{% else %}<span class="media-empty">تصویر پروژه در دسترس نیست</span>{% endif %}
+    {% endwith %}
+  </div>
+  <div class="home-project-title">
+    <h3>{{ item.title }}</h3>
+    {% include "partials/icon.html" with name="arrow" %}
+  </div>
+  <p class="home-project-summary">{% if item.is_demo %}نمونه‌چیدمان{% if item.summary %} · {% endif %}{% endif %}{{ item.summary }}</p>
+</a>
