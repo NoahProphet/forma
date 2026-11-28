@@ -1,4 +1,4 @@
-<a class="project-card" href="{{ item.get_absolute_url }}">
+<a class="project-card" href="{{ item.get_absolute_url }}" tabindex="0">
   <div class="project-card-image">
     {% with cover=item.card_image|default:item.image %}
     {% if cover %}<img src="{{ cover.url }}" width="1000" height="667" alt="" loading="lazy" decoding="async">{% else %}<span class="media-empty">تصویر پروژه در دسترس نیست</span>{% endif %}

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="wrap page-shell">
   <nav class="breadcrumbs" aria-label="مسیر صفحه"><a href="{% url 'home' %}">خانه</a><span>/</span><span aria-current="page">پروژه‌ها</span></nav>
-  <div class="page-heading"><div><h1>پروژه‌ها و چیدمان‌ها</h1><p>ترکیب متریال و تجهیزات را در یک فضا ببینید.</p></div></div>
+  <header class="page-heading project-index-heading"><div><h1>پروژه‌ها و چیدمان‌ها</h1><p>ترکیب متریال و تجهیزات را در یک فضا ببینید.</p></div></header>
   {% if projects %}{% include "partials/project-grid.html" with projects=projects heading="h2" only %}
   {% else %}<div class="empty-state"><h2>هنوز پروژه‌ای منتشر نشده است</h2><a class="button button-outline" href="{% url 'shop' %}">مشاهده محصولات</a></div>{% endif %}
 </div>
